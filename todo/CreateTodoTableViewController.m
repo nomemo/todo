@@ -15,13 +15,21 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *titleLabel;
 
+@property (weak, nonatomic) IBOutlet UITableViewCell *deadlineTableViewCell;
+//@property (weak, nonatomic) UITableViewCell
+
+@property (assign, nonatomic) BOOL showDatePicker;
+
 @end
 
 @implementation CreateTodoTableViewController
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.showDatePicker = false;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -49,22 +57,48 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    switch (section) {
+        case 0:
+            return 1;
+        case 1:
+            return 2;
+    }
+    return 0;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSIndexPath *ddindexPath = [tableView indexPathForCell:self.deadlineTableViewCell];
+    if ([ddindexPath compare:indexPath] == NSOrderedSame ) {
+        self.showDatePicker = !self.showDatePicker;
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
+    }
 }
-*/
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 1 && indexPath.section == 1) {
+        if (self.showDatePicker == true) {
+            return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+        } else {
+            return 0;
+        }
+    }
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+}
+
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+////    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+//
+////    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    // Configure the cell...
+//    return nil;
+////    return cell;
+//}
 
 /*
 // Override to support conditional editing of the table view.

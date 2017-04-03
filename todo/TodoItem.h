@@ -14,10 +14,18 @@ typedef enum : NSUInteger {
     TodoStatus_Abort,
 } TodoStatus;
 
+typedef enum : NSUInteger {
+    TodoLevel_NotImportantAndUrgency,
+    TodoLevel_UrgencyNotImportant,
+    TodoLevel_ImportantNotUrgency,
+    TodoLevel_ImportantAndUrgency,
+} TodoLevel;
+
 @interface TodoItem : NSObject<NSCoding>
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSDate *createTime;
 @property (nonatomic, assign) TodoStatus todoStatus;
+@property (nonatomic, assign) TodoLevel level;
 
 @end
