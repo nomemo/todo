@@ -9,7 +9,10 @@
 #import "DetailViewController.h"
 #import "NotificationDefines.h"
 
-@interface DetailViewController ()
+@interface DetailViewController ()<UIPopoverPresentationControllerDelegate>
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *abortButton;
+@property (weak, nonatomic) IBOutlet UIToolbar *bottomToolbar;
 
 @end
 
@@ -20,6 +23,9 @@
     if (_todoItem) {
         self.detailDescriptionLabel.text = [NSString stringWithFormat:@"Create at %@", [self.todoItem.createTime description]];
         self.title = _todoItem.title;
+        self.bottomToolbar.hidden = false;
+    } else {
+        self.bottomToolbar.hidden = true;
     }
 }
 
@@ -28,7 +34,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self configureView];
+
 }
+
 
 
 - (void)didReceiveMemoryWarning {
@@ -57,7 +65,18 @@
     [sheet addAction:applyAction];
     [sheet addAction:cancelAction];
     
-    [self presentViewController:sheet animated:YES completion:nil];
+//    UIUserInterfaceIdiomPhone NS_ENUM_AVAILABLE_IOS(3_2), // iPhone and iPod touch style UI
+//    UIUserInterfaceIdiomPad NS_ENUM_AVAILABLE_IOS(3_2), // iPad style UI
+
+    if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [sheet.popoverPresentationController setPermittedArrowDirections:UIPopoverArrowDirectionAny];
+        sheet.popoverPresentationController.sourceView = self.view;
+        sheet.popoverPresentationController.barButtonItem = self.abortButton;
+        [self presentViewController:sheet animated:YES completion:nil];
+    }
+    else {
+        [self presentViewController:sheet animated:YES completion:nil];
+    }
 
 }
 
@@ -70,6 +89,12 @@
         [self configureView];
     }
 }
+
+#pragma mark - UIPopoverPresentationControllerDelegate
+
+
+
+
 
 
 @end

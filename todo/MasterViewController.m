@@ -64,7 +64,15 @@
     [sheet addAction:applyAction];
     [sheet addAction:cancelAction];
     
-    [self presentViewController:sheet animated:YES completion:nil];
+    
+    if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [sheet.popoverPresentationController setPermittedArrowDirections:UIPopoverArrowDirectionAny];
+        sheet.popoverPresentationController.sourceView = self.view;
+        sheet.popoverPresentationController.barButtonItem = sender;
+        [self presentViewController:sheet animated:YES completion:nil];
+    } else {
+        [self presentViewController:sheet animated:YES completion:nil];
+    }
 
 }
 

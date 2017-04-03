@@ -10,6 +10,7 @@
 
 **2017-4-3**
 
+* fix UIAlertController will crash on iPad.
 * finish and abort todo
 * create changelog
 * data persistence

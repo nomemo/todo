@@ -76,6 +76,8 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
                     <connections>
+                        <outlet property="abortButton" destination="Bgj-Nt-TeE" id="dKC-Dp-9pn"/>
+                        <outlet property="bottomToolbar" destination="Si6-Rw-x0C" id="hwn-Nb-yfz"/>
                         <outlet property="detailDescriptionLabel" destination="0XM-y9-sOw" id="wvQ-7Y-K9d"/>
                     </connections>
                 </viewController>
