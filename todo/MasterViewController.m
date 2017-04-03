@@ -18,14 +18,20 @@
 
 @implementation MasterViewController
 
+
+
+- (void)setupPage {
+    [self loadData];
+    [self setupNotifications];
+}
+
 - (void)setupNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(insertNewTodoItem:) name:NOTI_TODO_CREATE object:nil];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupNotifications];
-    
+    [self setupPage];
 }
 
 
@@ -42,14 +48,37 @@
 
 
 - (void)insertNewTodoItem:(NSNotification *)noti {
-    NSLog(@"%@", noti.object);
+//    NSLog(@"%@", noti.object);
     if (!self.objects) {
         self.objects = [[NSMutableArray alloc] init];
     }
     [self.objects insertObject:noti.object atIndex:0];
+    [self saveData];
+
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
+#pragma mark - Data 
+
+- (void)saveData {
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
+    BOOL result = [NSKeyedArchiver archiveRootObject:self.objects toFile:fileName];
+    NSLog(@"result %@", @(result));
+//    NSJSONSerialization wr
+}
+
+- (void)loadData {
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
+    NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
+    if (array) {
+        self.objects = [NSMutableArray arrayWithArray:array];
+    }
+//    NSKeyedArchiver 
 }
 
 
@@ -60,7 +89,6 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         TodoItem *item = self.objects[indexPath.row];
         DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-//        [controller setDetailItem:object];
         controller.todoItem = item;
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;

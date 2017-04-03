@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TodoItem : NSObject
+@interface TodoItem : NSObject<NSCoding>
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSDate *createTime;

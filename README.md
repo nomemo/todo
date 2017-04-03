@@ -1,2 +1,11 @@
-# todo
-Regain my programming skill.
+# Target
+
+Regain my iOS programming skill.
+
+# Todo
+
+**2017-4-3**
+
+* create changelog
+* data persistence
+
