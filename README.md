@@ -1,6 +1,10 @@
 # Target
 
-Regain my iOS programming skill.
+- [ ]  Regain my iOS programming skill.
+- [ ] Only use basic iOS UIKit & framework.
+- [ ] Adaptive iPhone & iPad.
+- [ ] Adaptive Landscape & portrait.
+
 
 # Todo
 

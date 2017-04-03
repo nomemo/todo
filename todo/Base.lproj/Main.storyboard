@@ -135,6 +135,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="TodoList" id="Zdf-7t-Un8">
+                        <barButtonItem key="leftBarButtonItem" systemItem="organize" id="k6d-UX-g89">
+                            <connections>
+                                <action selector="setting:" destination="7bK-jq-Zjz" id="6ub-IE-5U7"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="T8j-03-Jbs">
                             <connections>
                                 <segue destination="OCi-VX-ZVR" kind="presentation" id="yg9-ab-qaS"/>

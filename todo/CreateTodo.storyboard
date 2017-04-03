@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,7 +14,7 @@
         <scene sceneID="Z0f-cH-NPO">
             <objects>
                 <tableViewController id="Nzo-o6-Gu7" customClass="CreateTodoTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="wqv-Cx-WuO">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="wqv-Cx-WuO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -27,21 +28,31 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LBz-No-TUB">
-                                                    <rect key="frame" x="66" y="7" width="301" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LBz-No-TUB">
+                                                    <rect key="frame" x="66" y="7" width="293" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="KQe-SK-ocL"/>
+                                                    </constraints>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oMw-uU-hgJ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oMw-uU-hgJ">
                                                     <rect key="frame" x="16" y="12" width="34" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="oMw-uU-hgJ" firstAttribute="leading" secondItem="bIn-5Z-IgB" secondAttribute="leadingMargin" constant="8" id="LSu-oc-GhZ"/>
+                                                <constraint firstItem="LBz-No-TUB" firstAttribute="top" secondItem="bIn-5Z-IgB" secondAttribute="top" constant="7" id="VLc-7u-rd5"/>
+                                                <constraint firstItem="LBz-No-TUB" firstAttribute="leading" secondItem="oMw-uU-hgJ" secondAttribute="trailing" constant="16" id="cyq-NI-L3q"/>
+                                                <constraint firstItem="LBz-No-TUB" firstAttribute="leading" secondItem="oMw-uU-hgJ" secondAttribute="trailing" constant="16" id="eYH-Pv-Zad"/>
+                                                <constraint firstItem="oMw-uU-hgJ" firstAttribute="top" secondItem="bIn-5Z-IgB" secondAttribute="topMargin" constant="4" id="hHN-LL-Tfg"/>
+                                                <constraint firstAttribute="trailing" secondItem="LBz-No-TUB" secondAttribute="trailing" constant="16" id="yU3-xT-ynS"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="oMw-uU-hgJ" secondAttribute="bottom" constant="3" id="zyX-Yn-yn5"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -86,7 +97,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7fz-ZC-eFq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-462" y="200"/>
+            <point key="canvasLocation" x="-391" y="199"/>
         </scene>
     </scenes>
 </document>

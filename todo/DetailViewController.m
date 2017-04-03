@@ -45,8 +45,20 @@
 }
 
 - (IBAction)aboart:(id)sender {
-    self.todoItem.todoStatus = TodoStatus_Abort;
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_ABORT object:self.todoItem];
+    
+    UIAlertController* sheet = [UIAlertController alertControllerWithTitle:@"Aboart Todo?" message:@"This will not changeable" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *applyAction = [UIAlertAction actionWithTitle:@"Apply" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        self.todoItem.todoStatus = TodoStatus_Abort;
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_ABORT object:self.todoItem];
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [sheet addAction:applyAction];
+    [sheet addAction:cancelAction];
+    
+    [self presentViewController:sheet animated:YES completion:nil];
+
 }
 
 

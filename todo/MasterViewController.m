@@ -49,15 +49,37 @@
 }
 
 
+#pragma mark - Setting 
+
+- (IBAction)setting:(id)sender {
+    
+    
+    UIAlertController* sheet = [UIAlertController alertControllerWithTitle:@"Setting" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *applyAction = [UIAlertAction actionWithTitle:@"Clean Data" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        [self clearData];
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [sheet addAction:applyAction];
+    [sheet addAction:cancelAction];
+    
+    [self presentViewController:sheet animated:YES completion:nil];
+
+}
+
+
+
+
 #pragma mark - TodoItem
 
 - (void)finishTodo:(NSNotification *)noti {
     
     TodoItem *item = noti.object;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.objects indexOfObject:item] inSection:0];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.textLabel.textColor = [UIColor greenColor];
-    
+//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//    cell.textLabel.textColor = [UIColor greenColor];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self saveData];
 }
 
@@ -65,8 +87,10 @@
     
     TodoItem *item = noti.object;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.objects indexOfObject:item] inSection:0];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.textLabel.textColor = [UIColor redColor];
+//    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//    cell.textLabel.textColor = [UIColor redColor];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+
     [self saveData];
 }
 
@@ -85,19 +109,31 @@
 #pragma mark - Data 
 
 
+- (NSString *)dataPath {
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    NSString *filePath = [path stringByAppendingPathComponent:@"todoItems.data"];
+    return filePath;
+}
+
+- (void)clearData {
+    self.objects = [NSMutableArray array];
+    [self saveData];
+    [self.tableView reloadData];
+}
+
 
 - (void)saveData {
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
-    BOOL result = [NSKeyedArchiver archiveRootObject:self.objects toFile:fileName];
+//    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+//    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
+    BOOL result = [NSKeyedArchiver archiveRootObject:self.objects toFile:[self dataPath]];
     NSLog(@"result %@", @(result));
 //    NSJSONSerialization wr
 }
 
 - (void)loadData {
-    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
-    NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:fileName];
+//    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+//    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
+    NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self dataPath]];
     if (array) {
         self.objects = [NSMutableArray arrayWithArray:array];
     }
@@ -143,7 +179,9 @@
             break;
         case TodoStatus_Finish:
             cell.textLabel.textColor = [UIColor greenColor];
+            break;
         default:
+//            cell.textLabel.textColor = [UIColor blackColor];
             break;
     }
     cell.textLabel.text = object.title;
