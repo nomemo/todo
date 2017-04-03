@@ -11,9 +11,19 @@
 @implementation TodoItem
 
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.todoStatus = TodoStatus_NotBeign;
+        self.createTime = [NSDate date];
+    }
+    return self;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.title forKey:@"title"];
     [aCoder encodeObject:self.createTime forKey:@"createTime"];
+    [aCoder encodeInteger:self.todoStatus forKey:@"todoStatus"];
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -21,6 +31,7 @@
     if (self) {
         self.title = [aDecoder decodeObjectForKey:@"title"];
         self.createTime = [aDecoder decodeObjectForKey:@"createTime"];
+        self.todoStatus = [aDecoder decodeIntForKey:@"todoStatus"];
     }
     return self;
 }

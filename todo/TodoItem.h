@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum : NSUInteger {
+    TodoStatus_NotBeign,
+    TodoStatus_Finish,
+    TodoStatus_Abort,
+} TodoStatus;
+
 @interface TodoItem : NSObject<NSCoding>
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSDate *createTime;
+@property (nonatomic, assign) TodoStatus todoStatus;
 
 @end

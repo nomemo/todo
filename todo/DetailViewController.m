@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "NotificationDefines.h"
 
 @interface DetailViewController ()
 
@@ -33,6 +34,19 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Todo Status 
+
+- (IBAction)finish:(id)sender {
+    self.todoItem.todoStatus = TodoStatus_Finish;
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_FINISH object:self.todoItem];
+}
+
+- (IBAction)aboart:(id)sender {
+    self.todoItem.todoStatus = TodoStatus_Abort;
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_ABORT object:self.todoItem];
 }
 
 

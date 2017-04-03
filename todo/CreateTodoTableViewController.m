@@ -40,7 +40,6 @@
     } else {
         TodoItem *item = [[TodoItem alloc]init];
         item.title = self.titleLabel.text;
-        item.createTime = [NSDate date];
         [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_CREATE object:item];
         NSLog(@"Save");
     }

@@ -26,7 +26,9 @@
 }
 
 - (void)setupNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(insertNewTodoItem:) name:NOTI_TODO_CREATE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createTodo:) name:NOTI_TODO_CREATE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(abortTodo:) name:NOTI_TODO_ABORT object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishTodo:) name:NOTI_TODO_FINISH object:nil];
 }
 
 - (void)viewDidLoad {
@@ -47,21 +49,42 @@
 }
 
 
-- (void)insertNewTodoItem:(NSNotification *)noti {
+#pragma mark - TodoItem
+
+- (void)finishTodo:(NSNotification *)noti {
+    
+    TodoItem *item = noti.object;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.objects indexOfObject:item] inSection:0];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.textLabel.textColor = [UIColor greenColor];
+    
+    [self saveData];
+}
+
+- (void)abortTodo:(NSNotification *)noti {
+    
+    TodoItem *item = noti.object;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.objects indexOfObject:item] inSection:0];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.textLabel.textColor = [UIColor redColor];
+    [self saveData];
+}
+
+- (void)createTodo:(NSNotification *)noti {
 //    NSLog(@"%@", noti.object);
     if (!self.objects) {
         self.objects = [[NSMutableArray alloc] init];
     }
     [self.objects insertObject:noti.object atIndex:0];
-    [self saveData];
 
-    
+    [self saveData];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
-
 #pragma mark - Data 
+
+
 
 - (void)saveData {
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
@@ -98,6 +121,8 @@
 
 #pragma mark - Table View
 
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -112,6 +137,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
     TodoItem *object = self.objects[indexPath.row];
+    switch (object.todoStatus) {
+        case TodoStatus_Abort:
+            cell.textLabel.textColor = [UIColor redColor];
+            break;
+        case TodoStatus_Finish:
+            cell.textLabel.textColor = [UIColor greenColor];
+        default:
+            break;
+    }
     cell.textLabel.text = object.title;
     return cell;
 }

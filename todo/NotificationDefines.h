@@ -10,6 +10,8 @@
 #define NotificationDefines_h
 
 #define NOTI_TODO_CREATE  @"TODO_CREATE"
+#define NOTI_TODO_FINISH  @"TODO_FINISH"
+#define NOTI_TODO_ABORT  @"TODO_ABORT"
 
 
 #endif /* NotificationDefines_h */

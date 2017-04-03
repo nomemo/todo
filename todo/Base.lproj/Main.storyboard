@@ -45,11 +45,31 @@
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Si6-Rw-x0C">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="完成" id="3KT-Ws-wnS">
+                                        <connections>
+                                            <action selector="finish:" destination="JEX-9P-axG" id="iU6-X0-acz"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="JQ9-Zd-T5c"/>
+                                    <barButtonItem title="放弃" id="Bgj-Nt-TeE">
+                                        <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="aboart:" destination="JEX-9P-axG" id="4Yw-Rb-UKY"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Si6-Rw-x0C" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="JKb-om-EPX"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="20" symbolic="YES" id="Tsc-yG-G1q"/>
+                            <constraint firstAttribute="trailing" secondItem="Si6-Rw-x0C" secondAttribute="trailing" id="jDB-5p-raV"/>
                             <constraint firstItem="0XM-y9-sOw" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" constant="10" id="jWN-iV-94e"/>
+                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="Si6-Rw-x0C" secondAttribute="bottom" id="sBk-H5-Tj0"/>
                             <constraint firstAttribute="trailing" secondItem="0XM-y9-sOw" secondAttribute="trailing" constant="20" symbolic="YES" id="tHV-ZD-HQj"/>
                         </constraints>
                     </view>
@@ -114,7 +134,7 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8">
+                    <navigationItem key="navigationItem" title="TodoList" id="Zdf-7t-Un8">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="T8j-03-Jbs">
                             <connections>
                                 <segue destination="OCi-VX-ZVR" kind="presentation" id="yg9-ab-qaS"/>
