@@ -19,6 +19,7 @@
 //@property (weak, nonatomic) UITableViewCell
 
 @property (assign, nonatomic) BOOL showDatePicker;
+@property (weak, nonatomic) IBOutlet UISwitch *repeatSwitch;
 
 @end
 
@@ -46,12 +47,19 @@
     if (self.navigationItem.leftBarButtonItem == sender) {
         NSLog(@"Cancel");
     } else {
-        TodoItem *item = [[TodoItem alloc]init];
-        item.title = self.titleLabel.text;
-        [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_CREATE object:item];
-        NSLog(@"Save");
+        [self saveTodoItem];
     }
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Save todo item 
+
+- (void)saveTodoItem {
+    TodoItem *item = [[TodoItem alloc]init];
+    item.title = self.titleLabel.text;
+    item.repeat = self.repeatSwitch.isOn;
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_CREATE object:item];
+    NSLog(@"Save");
 }
 
 #pragma mark - Table view data source
@@ -63,7 +71,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 1;
+            return 2;
         case 1:
             return 2;
     }

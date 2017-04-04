@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+
+
+typedef enum : NSUInteger {
+    TodoRepeat_Off,
+    TodoRepeat_On,
+} TodoRepeat;
+
 typedef enum : NSUInteger {
     TodoStatus_NotBeign,
     TodoStatus_Finish,
@@ -25,7 +32,10 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSDate *createTime;
+
+
 @property (nonatomic, assign) TodoStatus todoStatus;
 @property (nonatomic, assign) TodoLevel level;
+@property (nonatomic, assign) TodoRepeat repeat;
 
 @end

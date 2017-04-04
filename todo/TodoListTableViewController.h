@@ -1,0 +1,16 @@
+//
+//  TodoListTableViewController.h
+//  todo
+//
+//  Created by JUE DUKE on 2017/4/4.
+//  Copyright © 2017年 JUE DUKE. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "TodoItem.h"
+
+@interface TodoListTableViewController : UITableViewController
+
+@property (nonatomic, strong) NSMutableArray *todoLists;
+
+@end

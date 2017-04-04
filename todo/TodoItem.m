@@ -17,6 +17,7 @@
         self.todoStatus = TodoStatus_NotBeign;
         self.createTime = [NSDate date];
         self.level = TodoLevel_NotImportantAndUrgency;
+        self.repeat = TodoRepeat_Off;
     }
     return self;
 }
@@ -26,6 +27,7 @@
     [aCoder encodeObject:self.createTime forKey:@"createTime"];
     [aCoder encodeInteger:self.todoStatus forKey:@"todoStatus"];
     [aCoder encodeInteger:self.level forKey:@"level"];
+    [aCoder encodeInteger:self.repeat forKey:@"repeat"];
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -35,6 +37,7 @@
         self.createTime = [aDecoder decodeObjectForKey:@"createTime"];
         self.todoStatus = [aDecoder decodeIntForKey:@"todoStatus"];
         self.level = [aDecoder decodeIntegerForKey:@"level"];
+        self.repeat = [aDecoder decodeIntegerForKey:@"repeat"];
     }
     return self;
 }

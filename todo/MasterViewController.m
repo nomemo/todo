@@ -10,10 +10,21 @@
 #import "DetailViewController.h"
 #import "NotificationDefines.h"
 #import "TodoItem.h"
+#import "TodoListTableViewController.h"
 
 @interface MasterViewController ()
 
-@property NSMutableArray *objects;
+@property NSMutableArray *allTodoITems;
+
+
+
+@property (weak, nonatomic) IBOutlet UITableViewCell *allCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *finishCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *undoneCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *abortCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *missionPoolCell;
+
+
 @end
 
 @implementation MasterViewController
@@ -34,6 +45,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupPage];
+    
 }
 
 
@@ -84,34 +96,34 @@
 - (void)finishTodo:(NSNotification *)noti {
     
     TodoItem *item = noti.object;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.objects indexOfObject:item] inSection:0];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.allTodoITems indexOfObject:item] inSection:0];
 //    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 //    cell.textLabel.textColor = [UIColor greenColor];
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self saveData];
 }
 
 - (void)abortTodo:(NSNotification *)noti {
     
     TodoItem *item = noti.object;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.objects indexOfObject:item] inSection:0];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.allTodoITems indexOfObject:item] inSection:0];
 //    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 //    cell.textLabel.textColor = [UIColor redColor];
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
     [self saveData];
 }
 
 - (void)createTodo:(NSNotification *)noti {
 //    NSLog(@"%@", noti.object);
-    if (!self.objects) {
-        self.objects = [[NSMutableArray alloc] init];
+    if (!self.allTodoITems) {
+        self.allTodoITems = [[NSMutableArray alloc] init];
     }
-    [self.objects insertObject:noti.object atIndex:0];
+    [self.allTodoITems insertObject:noti.object atIndex:0];
 
     [self saveData];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - Data 
@@ -119,12 +131,12 @@
 
 - (NSString *)dataPath {
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *filePath = [path stringByAppendingPathComponent:@"todoItems.data"];
+    NSString *filePath = [path stringByAppendingPathComponent:@"todoList.data"];
     return filePath;
 }
 
 - (void)clearData {
-    self.objects = [NSMutableArray array];
+    self.allTodoITems = [NSMutableArray array];
     [self saveData];
     [self.tableView reloadData];
 }
@@ -133,7 +145,7 @@
 - (void)saveData {
 //    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
 //    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
-    BOOL result = [NSKeyedArchiver archiveRootObject:self.objects toFile:[self dataPath]];
+    BOOL result = [NSKeyedArchiver archiveRootObject:self.allTodoITems toFile:[self dataPath]];
     NSLog(@"result %@", @(result));
 //    NSJSONSerialization wr
 }
@@ -143,23 +155,80 @@
 //    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
     NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self dataPath]];
     if (array) {
-        self.objects = [NSMutableArray arrayWithArray:array];
+        self.allTodoITems = [NSMutableArray arrayWithArray:array];
     }
 //    NSKeyedArchiver 
+}
+
+- (NSMutableArray *)fetchMissonPool {
+    NSMutableArray *array = [NSMutableArray array];
+    for (TodoItem *item in self.allTodoITems) {
+        if (item.repeat == TodoRepeat_On) {
+            [array addObject:item];
+        }
+    }
+    return array;
+}
+
+- (NSMutableArray *)fetchAllTodoItem {
+    NSMutableArray *array = [NSMutableArray array];
+    for (TodoItem *item in self.allTodoITems) {
+        if (item.repeat == TodoRepeat_Off) {
+            [array addObject:item];
+        }
+    }
+    return array;
+}
+
+- (NSMutableArray *)fetchItemsByStatus:(TodoStatus)status {
+    NSMutableArray *array = [NSMutableArray array];
+    for (TodoItem *item in self.allTodoITems) {
+        switch (status) {
+            case TodoStatus_Finish:
+                if (item.todoStatus == TodoStatus_Finish) {
+                    [array addObject:item];
+                }
+                break;
+            case TodoStatus_Abort:
+                if (item.todoStatus == TodoStatus_Abort) {
+                    [array addObject:item];
+                }
+                break;
+            case TodoStatus_NotBeign:
+                if (item.todoStatus == TodoStatus_NotBeign) {
+                    [array addObject:item];
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return array;
 }
 
 
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        TodoItem *item = self.objects[indexPath.row];
-        DetailViewController *controller = (DetailViewController *)[[segue destinationViewController] topViewController];
-        controller.todoItem = item;
-        controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-        controller.navigationItem.leftItemsSupplementBackButton = YES;
+//    if ([segue.identifier isEqualToString:@"showTodoAll"]) {
+//        TodoListTableViewController *controller = [segue destinationViewController];
+//        controller.todoLists = self.allTodoITems;
+//        controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+//        controller.navigationItem.leftItemsSupplementBackButton = YES;
+//    }
+    TodoListTableViewController *controller = [segue destinationViewController];
+    if (sender == self.allCell) {
+        controller.todoLists = [self fetchAllTodoItem];
+    } else if (sender == self.finishCell) {
+        controller.todoLists = [self fetchItemsByStatus:TodoStatus_Finish];
+    } else if (sender == self.undoneCell) {
+        controller.todoLists = [self fetchItemsByStatus:TodoStatus_NotBeign];
+    } else if (sender == self.abortCell) {
+        controller.todoLists = [self fetchItemsByStatus:TodoStatus_Abort];
+    } else if (sender == self.missionPoolCell) {
+        controller.todoLists = [self fetchMissonPool];
     }
+    
 }
 
 
@@ -168,49 +237,48 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
-    TodoItem *object = self.objects[indexPath.row];
-    switch (object.todoStatus) {
-        case TodoStatus_Abort:
-            cell.textLabel.textColor = [UIColor redColor];
+//    return self.objects.count;
+    NSInteger result = 0;
+    switch (section) {
+        case 0:
+            result = 4;
             break;
-        case TodoStatus_Finish:
-            cell.textLabel.textColor = [UIColor greenColor];
+        case 1:
+            result = 1;
             break;
         default:
-//            cell.textLabel.textColor = [UIColor blackColor];
             break;
     }
-    cell.textLabel.text = object.title;
-    return cell;
+    return result;
 }
 
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"showTodoList" sender:cell];
 }
 
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.objects removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }
-}
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    // Return NO if you do not want the specified item to be editable.
+//    return YES;
+//}
+
+
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        [self.objects removeObjectAtIndex:indexPath.row];
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+//    }
+//}
 
 
 @end
