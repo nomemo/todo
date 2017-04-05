@@ -8,7 +8,7 @@
 
 #import "TodoListTableViewController.h"
 #import "DetailViewController.h"
-
+#import "DataCenter.h"
 
 @interface TodoListTableViewController ()
 
@@ -16,9 +16,22 @@
 
 @implementation TodoListTableViewController
 
+
+- (void)setupInitialPage {
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        self.todoLists = [[DataCenter dataCenter]fetchAllTodoItem];
+        self.title = @"History";
+    });
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    [self setupInitialPage];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     

@@ -30,8 +30,6 @@
         return;
     }
     self.bottomToolbar.hidden = false;
-    self.createTimeLabel.hidden = false;
-    
     self.createTimeLabel.text = [NSString stringWithFormat:@"Create at %@", [self.todoItem.createTime description]];
     self.title = _todoItem.title;
     if (_todoItem.todoStatus == TodoStatus_Finish && _todoItem.finishTime) {
