@@ -28,6 +28,7 @@
     [aCoder encodeInteger:self.todoStatus forKey:@"todoStatus"];
     [aCoder encodeInteger:self.level forKey:@"level"];
     [aCoder encodeInteger:self.repeat forKey:@"repeat"];
+    [aCoder encodeObject:self.finishTime forKey:@"finishTime"];
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -38,6 +39,7 @@
         self.todoStatus = [aDecoder decodeIntForKey:@"todoStatus"];
         self.level = [aDecoder decodeIntegerForKey:@"level"];
         self.repeat = [aDecoder decodeIntegerForKey:@"repeat"];
+        self.finishTime = [aDecoder decodeObjectForKey:@"finishTime"];
     }
     return self;
 }

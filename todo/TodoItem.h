@@ -32,6 +32,7 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSDate *createTime;
+@property (nonatomic, strong) NSDate *finishTime;
 
 
 @property (nonatomic, assign) TodoStatus todoStatus;

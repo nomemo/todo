@@ -11,8 +11,10 @@
 
 @interface DetailViewController ()<UIPopoverPresentationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *abortButton;
 @property (weak, nonatomic) IBOutlet UIToolbar *bottomToolbar;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *finishButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *abortButton;
 
 @end
 
@@ -20,12 +22,23 @@
 
 - (void)configureView {
     // Update the user interface for the detail item.
-    if (_todoItem) {
-        self.detailDescriptionLabel.text = [NSString stringWithFormat:@"Create at %@", [self.todoItem.createTime description]];
-        self.title = _todoItem.title;
-        self.bottomToolbar.hidden = false;
-    } else {
+    
+    if (!_todoItem) {
         self.bottomToolbar.hidden = true;
+        self.createTimeLabel.hidden = true;
+        self.finishTimeLabel.hidden = true;
+        return;
+    }
+    self.bottomToolbar.hidden = false;
+    self.createTimeLabel.hidden = false;
+    
+    self.createTimeLabel.text = [NSString stringWithFormat:@"Create at %@", [self.todoItem.createTime description]];
+    self.title = _todoItem.title;
+    if (_todoItem.todoStatus == TodoStatus_Finish && _todoItem.finishTime) {
+        self.finishTimeLabel.hidden = false;
+        self.finishTimeLabel.text = [NSString stringWithFormat:@"Finish at %@", [self.todoItem.finishTime description]];
+    } else {
+        self.finishTimeLabel.hidden = true;
     }
 }
 

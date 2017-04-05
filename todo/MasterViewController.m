@@ -95,7 +95,7 @@
 
 - (void)finishTodo:(NSNotification *)noti {
     
-    TodoItem *item = noti.object;
+//    TodoItem *item = noti.object;
 //    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.allTodoITems indexOfObject:item] inSection:0];
 //    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 //    cell.textLabel.textColor = [UIColor greenColor];
@@ -105,7 +105,7 @@
 
 - (void)abortTodo:(NSNotification *)noti {
     
-    TodoItem *item = noti.object;
+//    TodoItem *item = noti.object;
 //    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.allTodoITems indexOfObject:item] inSection:0];
 //    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 //    cell.textLabel.textColor = [UIColor redColor];
@@ -210,23 +210,22 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if ([segue.identifier isEqualToString:@"showTodoAll"]) {
-//        TodoListTableViewController *controller = [segue destinationViewController];
-//        controller.todoLists = self.allTodoITems;
-//        controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-//        controller.navigationItem.leftItemsSupplementBackButton = YES;
-//    }
-    TodoListTableViewController *controller = [segue destinationViewController];
+    TodoListTableViewController *controller = (TodoListTableViewController *)[[segue destinationViewController] topViewController];
     if (sender == self.allCell) {
         controller.todoLists = [self fetchAllTodoItem];
+        controller.title = @"History";
     } else if (sender == self.finishCell) {
         controller.todoLists = [self fetchItemsByStatus:TodoStatus_Finish];
+        controller.title = @"Finish";
     } else if (sender == self.undoneCell) {
         controller.todoLists = [self fetchItemsByStatus:TodoStatus_NotBeign];
+        controller.title = @"Unfinish";
     } else if (sender == self.abortCell) {
         controller.todoLists = [self fetchItemsByStatus:TodoStatus_Abort];
+        controller.title = @"Abort";
     } else if (sender == self.missionPoolCell) {
         controller.todoLists = [self fetchMissonPool];
+        controller.title = @"Mission Pool";
     }
     
 }
