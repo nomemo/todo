@@ -8,6 +8,9 @@
 
 # Todo
 
+**2017-4-7**
+
+* Todo list seprate by day
 
 **2017-4-6**
 

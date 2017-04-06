@@ -97,19 +97,33 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     TodoListTableViewController *controller = (TodoListTableViewController *)[[segue destinationViewController] topViewController];
     if (sender == self.allCell) {
-        controller.todoLists = [[DataCenter dataCenter] fetchAllTodoItem];
+        [[DataCenter dataCenter] fetchAllTodoItem:^(NSMutableArray *sections, NSMutableDictionary *data) {
+            controller.todoDicts = data;
+            controller.sections = sections;
+        }];
         controller.title = @"History";
     } else if (sender == self.finishCell) {
-        controller.todoLists = [[DataCenter dataCenter] fetchItemsByStatus:TodoStatus_Finish];
+        [[DataCenter dataCenter] fetchItemsByStatus:TodoStatus_Finish dataSource:^(NSMutableArray *sections, NSMutableDictionary *data) {
+            controller.todoDicts = data;
+            controller.sections = sections;
+        }];
         controller.title = @"Finish";
     } else if (sender == self.undoneCell) {
-        controller.todoLists = [[DataCenter dataCenter] fetchItemsByStatus:TodoStatus_NotBeign];
+        [[DataCenter dataCenter] fetchItemsByStatus:TodoStatus_NotBeign dataSource:^(NSMutableArray *sections, NSMutableDictionary *data) {
+            controller.todoDicts = data;
+            controller.sections = sections;
+        }];
+
         controller.title = @"Unfinish";
     } else if (sender == self.abortCell) {
-        controller.todoLists = [[DataCenter dataCenter] fetchItemsByStatus:TodoStatus_Abort];
+        [[DataCenter dataCenter] fetchItemsByStatus:TodoStatus_Abort dataSource:^(NSMutableArray *sections, NSMutableDictionary *data) {
+            controller.todoDicts = data;
+            controller.sections = sections;
+        }];
+
         controller.title = @"Abort";
     } else if (sender == self.missionPoolCell) {
-        controller.todoLists = [[DataCenter dataCenter] fetchMissonPool];
+//        controller.todoLists = [[DataCenter dataCenter] fetchMissonPool];
         controller.title = @"Mission Pool";
     }
     

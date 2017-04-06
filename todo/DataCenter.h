@@ -9,14 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "TodoItem.h"
 
+typedef void(^TableDataSource)(NSMutableArray *sections, NSMutableDictionary *data);
+
 @interface DataCenter : NSObject
 
 + (DataCenter *)dataCenter;
 
 - (void)clearData;
 - (NSMutableArray *)fetchMissonPool;
-- (NSMutableArray *)fetchItemsByStatus:(TodoStatus)status;
-- (NSMutableArray *)fetchAllTodoItem;
+- (void )fetchItemsByStatus:(TodoStatus)status dataSource:(TableDataSource)dataSource;
+- (void )fetchAllTodoItem:(TableDataSource)dataSource;
 
 
 @end

@@ -11,6 +11,16 @@
 @implementation TodoItem
 
 
+- (NSString *)createTimeString {
+    if (_createTimeString == nil) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"..."]];
+        _createTimeString = [formatter stringFromDate:self.createTime];
+    }
+    return _createTimeString;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {

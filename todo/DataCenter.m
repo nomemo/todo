@@ -21,6 +21,7 @@ static DataCenter *_sharedInstance;
 @implementation DataCenter
 
 
+
 + (instancetype)allocWithZone:(struct _NSZone *)zone {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -84,7 +85,9 @@ static DataCenter *_sharedInstance;
     //    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
     NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self dataPath]];
     if (array) {
+        
         self.allTodoITems = [NSMutableArray arrayWithArray:array];
+
     }
     //    NSKeyedArchiver
 }
@@ -99,40 +102,60 @@ static DataCenter *_sharedInstance;
     return array;
 }
 
-- (NSMutableArray *)fetchAllTodoItem {
+- (void )fetchAllTodoItem:(TableDataSource)dataSource {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSMutableArray *array = [NSMutableArray array];
     for (TodoItem *item in self.allTodoITems) {
         if (item.repeat == TodoRepeat_Off) {
-            [array addObject:item];
+            NSMutableArray *todos = dict[item.createTimeString];
+            if (todos == nil) {
+                todos = [NSMutableArray array];
+                dict[item.createTimeString] = todos;
+                [array addObject:item.createTimeString];
+            }
+            [todos addObject:item];
         }
     }
-    return array;
+    dataSource(array, dict);
 }
 
-- (NSMutableArray *)fetchItemsByStatus:(TodoStatus)status {
-    NSMutableArray *array = [NSMutableArray array];
+- (void )fetchItemsByStatus:(TodoStatus)status dataSource:(TableDataSource)dataSource{
+    NSMutableArray *tempArray = [NSMutableArray array];
     for (TodoItem *item in self.allTodoITems) {
         switch (status) {
             case TodoStatus_Finish:
                 if (item.todoStatus == TodoStatus_Finish) {
-                    [array addObject:item];
+                    [tempArray addObject:item];
                 }
                 break;
             case TodoStatus_Abort:
                 if (item.todoStatus == TodoStatus_Abort) {
-                    [array addObject:item];
+                    [tempArray addObject:item];
                 }
                 break;
             case TodoStatus_NotBeign:
                 if (item.todoStatus == TodoStatus_NotBeign) {
-                    [array addObject:item];
+                    [tempArray addObject:item];
                 }
                 break;
             default:
                 break;
         }
     }
-    return array;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSMutableArray *array = [NSMutableArray array];
+    for (TodoItem *item in tempArray) {
+        if (item.repeat == TodoRepeat_Off) {
+            NSMutableArray *todos = dict[item.createTimeString];
+            if (todos == nil) {
+                todos = [NSMutableArray array];
+                dict[item.createTimeString] = todos;
+                [array addObject:item.createTimeString];
+            }
+            [todos addObject:item];
+        }
+    }
+    dataSource(array, dict);
 }
 
 

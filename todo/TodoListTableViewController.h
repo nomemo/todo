@@ -11,6 +11,7 @@
 
 @interface TodoListTableViewController : UITableViewController
 
-@property (nonatomic, strong) NSMutableArray *todoLists;
+@property (nonatomic, strong) NSMutableDictionary *todoDicts;
+@property (nonatomic, strong) NSMutableArray *sections;
 
 @end

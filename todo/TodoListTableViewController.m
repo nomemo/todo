@@ -21,7 +21,10 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        self.todoLists = [[DataCenter dataCenter]fetchAllTodoItem];
+        [[DataCenter dataCenter]fetchAllTodoItem:^(NSMutableArray *sections, NSMutableDictionary *data) {
+            self.todoDicts = data;
+            self.sections = sections;
+        }];
         self.title = @"History";
     });
 }
@@ -49,7 +52,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        TodoItem *item = self.todoLists[indexPath.row];
+
+        NSArray *todos = self.todoDicts[self.sections[indexPath.section]];
+        TodoItem *item = todos[indexPath.row];
+
         DetailViewController *controller = [segue destinationViewController];
         controller.todoItem = item;
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
@@ -60,18 +66,25 @@
 
 #pragma mark - Table view data source
 
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return self.sections[section];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return [self.todoDicts allKeys].count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.todoLists.count;
+    NSArray *todos = self.todoDicts[self.sections[section]];
+    return todos.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoItemCell1" forIndexPath:indexPath];
 
-    TodoItem *object = self.todoLists[indexPath.row];
+    NSArray *todos = self.todoDicts[self.sections[indexPath.section]];
+    TodoItem *object = todos[indexPath.row];
     switch (object.todoStatus) {
         case TodoStatus_Abort:
             cell.textLabel.textColor = [UIColor redColor];
