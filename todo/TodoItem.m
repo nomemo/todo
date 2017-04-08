@@ -10,6 +10,23 @@
 
 @implementation TodoItem
 
++ (NSString *)todoLevelString:(TodoLevel)level {
+    switch (level) {
+        case TodoLevel_ImportantAndUrgent:
+            return @"Important&Urgent";
+            break;
+        case TodoLevel_Important:
+            return @"Important";
+            break;
+        case TodoLevel_Normal:
+            return @"Normal";
+            break;
+        case TodoLevel_Urgent:
+            return @"Urgent";
+            break;
+    }
+    return nil;
+}
 
 - (NSString *)createTimeString {
     if (_createTimeString == nil) {
@@ -26,7 +43,7 @@
     if (self) {
         self.todoStatus = TodoStatus_NotBeign;
         self.createTime = [NSDate date];
-        self.level = TodoLevel_NotImportantAndUrgency;
+        self.level = TodoLevel_Normal;
         self.repeat = TodoRepeat_Off;
     }
     return self;

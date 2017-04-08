@@ -22,10 +22,10 @@ typedef enum : NSUInteger {
 } TodoStatus;
 
 typedef enum : NSUInteger {
-    TodoLevel_NotImportantAndUrgency,
-    TodoLevel_UrgencyNotImportant,
-    TodoLevel_ImportantNotUrgency,
-    TodoLevel_ImportantAndUrgency,
+    TodoLevel_Normal,
+    TodoLevel_Important,
+    TodoLevel_Urgent,
+    TodoLevel_ImportantAndUrgent,
 } TodoLevel;
 
 @interface TodoItem : NSObject<NSCoding>
@@ -41,5 +41,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) TodoLevel level;
 @property (nonatomic, assign) TodoRepeat repeat;
 
+
++ (NSString *)todoLevelString:(TodoLevel)level;
 
 @end

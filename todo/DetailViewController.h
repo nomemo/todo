@@ -15,6 +15,7 @@
 @property (strong, nonatomic) TodoItem *todoItem;
 @property (weak, nonatomic) IBOutlet UILabel *createTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *finishTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *levelLabel;
 
 @end
 

@@ -9,24 +9,29 @@
 #import "CreateTodoTableViewController.h"
 #import "NotificationDefines.h" 
 #import "TodoItem.h"
-
+#import "TodoLevelSelectTableViewController.h"
 
 @interface CreateTodoTableViewController ()
 
+
+@property (nonatomic, assign) TodoLevel todoLevel;
+
 @property (weak, nonatomic) IBOutlet UITextField *titleLabel;
-
 @property (weak, nonatomic) IBOutlet UITableViewCell *deadlineTableViewCell;
-//@property (weak, nonatomic) UITableViewCell
-
 @property (assign, nonatomic) BOOL showDatePicker;
 @property (weak, nonatomic) IBOutlet UISwitch *repeatSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *levelDetailLabel;
 
 @end
 
 @implementation CreateTodoTableViewController
 
 
-
+- (void)setTodoLevel:(TodoLevel)todoLevel {
+    _todoLevel = todoLevel;
+    NSString *string = [TodoItem todoLevelString:todoLevel];
+    self.levelDetailLabel.text = string;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,6 +63,7 @@
     TodoItem *item = [[TodoItem alloc]init];
     item.title = self.titleLabel.text;
     item.repeat = self.repeatSwitch.isOn;
+    item.level = self.todoLevel;
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_CREATE object:item];
     NSLog(@"Save");
 }
@@ -71,7 +77,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 2;
+            return 3;
         case 1:
             return 2;
     }
@@ -142,15 +148,22 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
+
+
+
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"gotoSelectLevelPage"]) {
+        TodoLevelSelectTableViewController *selectCon = segue.destinationViewController;
+        selectCon.todoLevelCallback = ^(TodoLevel level) {
+            self.todoLevel = level;
+        };
+    }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
-
 
 @end
