@@ -8,7 +8,34 @@
 
 #import "TodoItem.h"
 
+@interface TodoItem()
+
+@property (nonatomic, strong) NSDate *createTime;
+@property (nonatomic, strong) NSDate *finishTime;
+@property (nonatomic, strong) NSDate *beginTime;
+@property (nonatomic, strong) NSString *createTimeString;
+
+
+@end
+
 @implementation TodoItem
+
++ (NSString *)totoStatusString:(TodoStatus)status {
+    switch (status) {
+        case TodoStatus_Abort:
+            return @"Abort";
+            break;
+        case TodoStatus_Finish:
+            return @"Finish";
+            break;
+        case TodoStatus_NotBeign:
+            return @"NotBegin";
+            break;
+        case TodoStatus_Processing:
+            return @"Processing";
+            break;
+    }
+}
 
 + (NSString *)todoLevelString:(TodoLevel)level {
     switch (level) {
@@ -26,6 +53,21 @@
             break;
     }
     return nil;
+}
+
+- (void)setTodoStatus:(TodoStatus)todoStatus {
+    _todoStatus = todoStatus;
+    switch (todoStatus) {
+        case TodoStatus_Abort:
+        case TodoStatus_Finish:
+            self.finishTime = [NSDate date];
+            break;
+        case TodoStatus_Processing:
+            self.beginTime = [NSDate date];
+            break;
+        default:
+            break;
+    }
 }
 
 - (NSString *)createTimeString {

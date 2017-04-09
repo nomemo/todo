@@ -16,6 +16,10 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *finishButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *abortButton;
 
+
+@property (weak, nonatomic) IBOutlet UIView *statusBar;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+
 @end
 
 @implementation DetailViewController
@@ -28,6 +32,7 @@
         self.createTimeLabel.hidden = true;
         self.finishTimeLabel.hidden = true;
         self.levelLabel.hidden = true;
+        self.statusBar.hidden = true;
         return;
     }
     self.bottomToolbar.hidden = false;
@@ -39,6 +44,27 @@
         self.finishTimeLabel.text = [NSString stringWithFormat:@"Finish at %@", [self.todoItem.finishTime description]];
     } else {
         self.finishTimeLabel.hidden = true;
+    }
+    
+    self.statusLabel.text = [TodoItem totoStatusString:_todoItem.todoStatus];
+    switch (_todoItem.todoStatus) {
+        case TodoStatus_Processing:
+//            self.statusBar.backgroundColor = [UIColor blueColor];
+//            self.statusBar.hidden = false;
+            self.statusBar.hidden = true;
+            break;
+        case TodoStatus_Finish:
+            self.statusBar.backgroundColor = [UIColor greenColor];
+            self.statusBar.hidden = false;
+            break;
+        case TodoStatus_Abort:
+            self.statusBar.backgroundColor = [UIColor redColor];
+            self.statusBar.hidden = false;
+            break;
+        case TodoStatus_NotBeign:
+            self.statusBar.hidden = true;
+            break;
+
     }
 }
 

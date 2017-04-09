@@ -19,6 +19,7 @@ typedef enum : NSUInteger {
     TodoStatus_NotBeign,
     TodoStatus_Finish,
     TodoStatus_Abort,
+    TodoStatus_Processing,
 } TodoStatus;
 
 typedef enum : NSUInteger {
@@ -31,10 +32,11 @@ typedef enum : NSUInteger {
 @interface TodoItem : NSObject<NSCoding>
 
 @property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSDate *createTime;
-@property (nonatomic, strong) NSDate *finishTime;
 
-@property (nonatomic, strong) NSString *createTimeString;
+@property (nonatomic, strong, readonly) NSString *createTimeString;
+@property (nonatomic, strong, readonly) NSDate *createTime;
+@property (nonatomic, strong, readonly) NSDate *finishTime;
+@property (nonatomic, strong, readonly) NSDate *beginTime;
 
 
 @property (nonatomic, assign) TodoStatus todoStatus;
@@ -43,5 +45,6 @@ typedef enum : NSUInteger {
 
 
 + (NSString *)todoLevelString:(TodoLevel)level;
++ (NSString *)totoStatusString:(TodoStatus)status;
 
 @end

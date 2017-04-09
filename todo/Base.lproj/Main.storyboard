@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -38,8 +37,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                <rect key="frame" x="20" y="335" width="335" height="17"/>
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Start Time" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
+                                <rect key="frame" x="16" y="72" width="77" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="End Time" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="F1S-16-lo7">
+                                <rect key="frame" x="16" y="96" width="77" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Todo Level" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="JzZ-rP-tbw">
+                                <rect key="frame" x="16" y="121" width="81" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -63,44 +81,61 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="F1S-16-lo7">
-                                <rect key="frame" x="20" y="360" width="335" height="17"/>
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Start Time" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="MY2-jX-3fY">
+                                <rect key="frame" x="151" y="72" width="77" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="17" id="2qG-jX-iPf"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Detail view content goes here" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="JzZ-rP-tbw">
-                                <rect key="frame" x="16" y="385" width="343" height="17"/>
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="End Time" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="xcl-d5-BnR">
+                                <rect key="frame" x="151" y="97" width="77" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="17" id="5SY-Hq-NWv"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="17" id="kyT-66-IXE"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
+                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Todo Level" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4Xe-5G-efR">
+                                <rect key="frame" x="147" y="121" width="81" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bip-r9-o1K">
+                                <rect key="frame" x="0.0" y="523" width="375" height="144"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahr-7y-tCM">
+                                        <rect key="frame" x="8" y="40" width="359" height="64"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="48"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="144" id="Yj0-Uc-V7s"/>
+                                    <constraint firstItem="Ahr-7y-tCM" firstAttribute="leading" secondItem="bip-r9-o1K" secondAttribute="leading" constant="8" id="bKV-gC-H2x"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ahr-7y-tCM" secondAttribute="trailing" constant="8" id="mMb-fM-R02"/>
+                                    <constraint firstItem="Ahr-7y-tCM" firstAttribute="top" secondItem="bip-r9-o1K" secondAttribute="top" constant="40" id="mmN-kG-3IM"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ahr-7y-tCM" secondAttribute="bottom" constant="40" id="sBw-De-PI6"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="F1S-16-lo7" secondAttribute="trailing" constant="4" id="GPX-nf-yg7"/>
-                            <constraint firstItem="JzZ-rP-tbw" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="16" id="IYa-LS-qj0"/>
+                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="bip-r9-o1K" secondAttribute="bottom" id="Ins-Jr-Km0"/>
                             <constraint firstItem="Si6-Rw-x0C" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="JKb-om-EPX"/>
-                            <constraint firstItem="F1S-16-lo7" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="4" id="L5e-Yi-QZP"/>
-                            <constraint firstItem="F1S-16-lo7" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="bottom" constant="8" id="T0v-Rt-XX9"/>
-                            <constraint firstItem="0XM-y9-sOw" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="20" symbolic="YES" id="Tsc-yG-G1q"/>
+                            <constraint firstAttribute="trailing" secondItem="bip-r9-o1K" secondAttribute="trailing" id="Ymf-qn-TnC"/>
+                            <constraint firstItem="bip-r9-o1K" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="co5-WN-qOt"/>
                             <constraint firstAttribute="trailing" secondItem="Si6-Rw-x0C" secondAttribute="trailing" id="jDB-5p-raV"/>
-                            <constraint firstItem="0XM-y9-sOw" firstAttribute="centerY" secondItem="svH-Pt-448" secondAttribute="centerY" constant="10" id="jWN-iV-94e"/>
-                            <constraint firstItem="JzZ-rP-tbw" firstAttribute="top" secondItem="F1S-16-lo7" secondAttribute="bottom" constant="8" id="rm1-vL-J17"/>
                             <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="Si6-Rw-x0C" secondAttribute="bottom" id="sBk-H5-Tj0"/>
-                            <constraint firstAttribute="trailing" secondItem="0XM-y9-sOw" secondAttribute="trailing" constant="20" symbolic="YES" id="tHV-ZD-HQj"/>
-                            <constraint firstAttribute="trailing" secondItem="JzZ-rP-tbw" secondAttribute="trailing" constant="16" id="ymW-vy-mcc"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -112,11 +147,13 @@
                         <outlet property="finishButton" destination="3KT-Ws-wnS" id="P5b-ug-j5w"/>
                         <outlet property="finishTimeLabel" destination="F1S-16-lo7" id="y3k-1T-kOs"/>
                         <outlet property="levelLabel" destination="JzZ-rP-tbw" id="m7b-oc-bJd"/>
+                        <outlet property="statusBar" destination="bip-r9-o1K" id="vIm-nY-JqK"/>
+                        <outlet property="statusLabel" destination="Ahr-7y-tCM" id="52Z-wo-Pqm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1636" y="218"/>
+            <point key="canvasLocation" x="1636" y="217.24137931034485"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
