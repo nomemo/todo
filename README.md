@@ -8,6 +8,15 @@
 
 # Todo
 
+**2017-4-10**
+
+* show and record mission start time
+* show mission status
+
+**2017-4-9**
+
+* show ergent level
+
 **2017-4-7**
 
 * Todo list seprate by day
