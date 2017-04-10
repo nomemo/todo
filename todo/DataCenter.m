@@ -52,8 +52,7 @@ static DataCenter *_sharedInstance;
 
 - (void)setupNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createTodo:) name:NOTI_TODO_CREATE object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(abortTodo:) name:NOTI_TODO_ABORT object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishTodo:) name:NOTI_TODO_FINISH object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusChange:) name:NOTI_TODO_STATUS object:nil];
 }
 
 
@@ -162,17 +161,9 @@ static DataCenter *_sharedInstance;
 
 #pragma mark - TodoItem
 
-- (void)finishTodo:(NSNotification *)noti {
-    
-    //    TodoItem *item = noti.object;
-    //    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.allTodoITems indexOfObject:item] inSection:0];
-    //    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    //    cell.textLabel.textColor = [UIColor greenColor];
-    //    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self saveData];
-}
 
-- (void)abortTodo:(NSNotification *)noti {
+
+- (void)statusChange:(NSNotification *)noti {
     
     //    TodoItem *item = noti.object;
     //    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[self.allTodoITems indexOfObject:item] inSection:0];

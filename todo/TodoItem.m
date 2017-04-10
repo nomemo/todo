@@ -11,8 +11,8 @@
 @interface TodoItem()
 
 @property (nonatomic, strong) NSDate *createTime;
-@property (nonatomic, strong) NSDate *finishTime;
-@property (nonatomic, strong) NSDate *beginTime;
+@property (nonatomic, strong) NSDate *endTime;
+@property (nonatomic, strong) NSDate *startTime;
 @property (nonatomic, strong) NSString *createTimeString;
 
 
@@ -60,10 +60,10 @@
     switch (todoStatus) {
         case TodoStatus_Abort:
         case TodoStatus_Finish:
-            self.finishTime = [NSDate date];
+            self.endTime = [NSDate date];
             break;
         case TodoStatus_Processing:
-            self.beginTime = [NSDate date];
+            self.startTime = [NSDate date];
             break;
         default:
             break;
@@ -93,22 +93,27 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.title forKey:@"title"];
-    [aCoder encodeObject:self.createTime forKey:@"createTime"];
     [aCoder encodeInteger:self.todoStatus forKey:@"todoStatus"];
     [aCoder encodeInteger:self.level forKey:@"level"];
     [aCoder encodeInteger:self.repeat forKey:@"repeat"];
-    [aCoder encodeObject:self.finishTime forKey:@"finishTime"];
+    
+    
+    [aCoder encodeObject:self.endTime forKey:@"endTime"];
+    [aCoder encodeObject:self.createTime forKey:@"createTime"];
+    [aCoder encodeObject:self.startTime forKey:@"startTime"];
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super init];
     if (self) {
         self.title = [aDecoder decodeObjectForKey:@"title"];
-        self.createTime = [aDecoder decodeObjectForKey:@"createTime"];
         self.todoStatus = [aDecoder decodeIntForKey:@"todoStatus"];
         self.level = [aDecoder decodeIntegerForKey:@"level"];
         self.repeat = [aDecoder decodeIntegerForKey:@"repeat"];
-        self.finishTime = [aDecoder decodeObjectForKey:@"finishTime"];
+        
+        self.createTime = [aDecoder decodeObjectForKey:@"createTime"];
+        self.startTime = [aDecoder decodeObjectForKey:@"startTime"];
+        self.endTime = [aDecoder decodeObjectForKey:@"endTime"];
     }
     return self;
 }

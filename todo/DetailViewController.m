@@ -1,4 +1,4 @@
-//
+ //
 //  DetailViewController.m
 //  todo
 //
@@ -15,57 +15,75 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *finishButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *abortButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *startButton;
 
 
 @property (weak, nonatomic) IBOutlet UIView *statusBar;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *statusBarBottomConstraint;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *createTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *startTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *finishTimeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *levelLabel;
+
 
 @end
 
 @implementation DetailViewController
 
+
+
+- (void)hideStatusBar:(BOOL)hide {
+    [self.view layoutIfNeeded];
+
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        if (hide) {
+            self.statusBarBottomConstraint.constant = -CGRectGetHeight(self.statusBar.frame);
+        } else {
+            self.statusBarBottomConstraint.constant = 0.0;
+        }
+        [self.view layoutIfNeeded];
+    } completion:nil];
+}
+
+- (void)setupStatusbar {
+    
+    [self.view layoutIfNeeded];
+    
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        switch (_todoItem.todoStatus) {
+            case TodoStatus_Processing:
+                self.statusBar.backgroundColor = [UIColor blueColor];
+                break;
+            case TodoStatus_Finish:
+                self.statusBar.backgroundColor = [UIColor greenColor];
+                break;
+            case TodoStatus_Abort:
+                self.statusBar.backgroundColor = [UIColor redColor];
+                break;
+            case TodoStatus_NotBeign:
+                [self hideStatusBar:true];
+                break;
+        }
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.statusLabel.text = [TodoItem totoStatusString:_todoItem.todoStatus];
+    }];
+
+}
+
+
 - (void)configureView {
     // Update the user interface for the detail item.
-    
-    if (!_todoItem) {
-        self.bottomToolbar.hidden = true;
-        self.createTimeLabel.hidden = true;
-        self.finishTimeLabel.hidden = true;
-        self.levelLabel.hidden = true;
-        self.statusBar.hidden = true;
-        return;
-    }
-    self.bottomToolbar.hidden = false;
-    self.createTimeLabel.text = [NSString stringWithFormat:@"Create at %@", [self.todoItem.createTime description]];
     self.title = _todoItem.title;
-    self.levelLabel.text = [TodoItem todoLevelString:_todoItem.level];
-    if (_todoItem.todoStatus == TodoStatus_Finish && _todoItem.finishTime) {
-        self.finishTimeLabel.hidden = false;
-        self.finishTimeLabel.text = [NSString stringWithFormat:@"Finish at %@", [self.todoItem.finishTime description]];
-    } else {
-        self.finishTimeLabel.hidden = true;
-    }
-    
-    self.statusLabel.text = [TodoItem totoStatusString:_todoItem.todoStatus];
-    switch (_todoItem.todoStatus) {
-        case TodoStatus_Processing:
-//            self.statusBar.backgroundColor = [UIColor blueColor];
-//            self.statusBar.hidden = false;
-            self.statusBar.hidden = true;
-            break;
-        case TodoStatus_Finish:
-            self.statusBar.backgroundColor = [UIColor greenColor];
-            self.statusBar.hidden = false;
-            break;
-        case TodoStatus_Abort:
-            self.statusBar.backgroundColor = [UIColor redColor];
-            self.statusBar.hidden = false;
-            break;
-        case TodoStatus_NotBeign:
-            self.statusBar.hidden = true;
-            break;
+    [self setupStatusbar];
+    self.createTimeLabel.text = [self.todoItem.createTime description];
+    self.startTimeLabel.text = [self.todoItem.startTime description];
+    self.finishTimeLabel.text = [self.todoItem.endTime description];
 
-    }
 }
 
 
@@ -86,37 +104,42 @@
 
 #pragma mark - Todo Status 
 
-- (IBAction)finish:(id)sender {
-    self.todoItem.todoStatus = TodoStatus_Finish;
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_FINISH object:self.todoItem];
+
+- (IBAction)changeStatus:(id)sender {
+    if (sender == self.startButton) {
+        [self statusChangeTo:TodoStatus_Processing];
+    } else if (sender == self.finishButton) {
+        [self statusChangeTo:TodoStatus_Finish];
+    } else if (sender == self.abortButton) {
+        UIAlertController* sheet = [UIAlertController alertControllerWithTitle:@"Aboart Todo?" message:@"This will not changeable" preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction *applyAction = [UIAlertAction actionWithTitle:@"Apply" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            [self statusChangeTo:TodoStatus_Abort];
+        }];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+        [sheet addAction:applyAction];
+        [sheet addAction:cancelAction];
+        
+        if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            [sheet.popoverPresentationController setPermittedArrowDirections:UIPopoverArrowDirectionAny];
+            sheet.popoverPresentationController.sourceView = self.view;
+            sheet.popoverPresentationController.barButtonItem = self.abortButton;
+            [self presentViewController:sheet animated:YES completion:nil];
+        }
+        else {
+            [self presentViewController:sheet animated:YES completion:nil];
+        }
+    }
 }
 
-- (IBAction)aboart:(id)sender {
-    
-    UIAlertController* sheet = [UIAlertController alertControllerWithTitle:@"Aboart Todo?" message:@"This will not changeable" preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *applyAction = [UIAlertAction actionWithTitle:@"Apply" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        self.todoItem.todoStatus = TodoStatus_Abort;
-        [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_ABORT object:self.todoItem];
-    }];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    [sheet addAction:applyAction];
-    [sheet addAction:cancelAction];
-    
-//    UIUserInterfaceIdiomPhone NS_ENUM_AVAILABLE_IOS(3_2), // iPhone and iPod touch style UI
-//    UIUserInterfaceIdiomPad NS_ENUM_AVAILABLE_IOS(3_2), // iPad style UI
-
-    if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        [sheet.popoverPresentationController setPermittedArrowDirections:UIPopoverArrowDirectionAny];
-        sheet.popoverPresentationController.sourceView = self.view;
-        sheet.popoverPresentationController.barButtonItem = self.abortButton;
-        [self presentViewController:sheet animated:YES completion:nil];
-    }
-    else {
-        [self presentViewController:sheet animated:YES completion:nil];
-    }
-
+- (void)statusChangeTo:(TodoStatus)status {
+    self.todoItem.todoStatus = status;
+    self.startTimeLabel.text = [self.todoItem.startTime description];
+    self.finishTimeLabel.text = [self.todoItem.endTime description];
+    [self hideStatusBar:NO];
+    [self setupStatusbar];
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_STATUS object:self.todoItem];
 }
 
 

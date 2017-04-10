@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -37,77 +38,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Start Time" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0XM-y9-sOw">
-                                <rect key="frame" x="16" y="72" width="77" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                            </label>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="End Time" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="F1S-16-lo7">
-                                <rect key="frame" x="16" y="96" width="77" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                            </label>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Todo Level" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="JzZ-rP-tbw">
-                                <rect key="frame" x="16" y="121" width="81" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                            </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Si6-Rw-x0C">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="479" width="375" height="44"/>
                                 <items>
                                     <barButtonItem title="完成" id="3KT-Ws-wnS">
+                                        <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
-                                            <action selector="finish:" destination="JEX-9P-axG" id="iU6-X0-acz"/>
+                                            <action selector="changeStatus:" destination="JEX-9P-axG" id="OqC-yT-vFf"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="JQ9-Zd-T5c"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="HYQ-1w-7LG"/>
+                                    <barButtonItem title="开始" id="GnQ-rE-Jog">
+                                        <color key="tintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="changeStatus:" destination="JEX-9P-axG" id="iCa-1r-lOy"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="bOW-eE-LZd"/>
                                     <barButtonItem title="放弃" id="Bgj-Nt-TeE">
                                         <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
-                                            <action selector="aboart:" destination="JEX-9P-axG" id="4Yw-Rb-UKY"/>
+                                            <action selector="changeStatus:" destination="JEX-9P-axG" id="XiF-pJ-h2C"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Start Time" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="MY2-jX-3fY">
-                                <rect key="frame" x="151" y="72" width="77" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                            </label>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="End Time" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="xcl-d5-BnR">
-                                <rect key="frame" x="151" y="97" width="77" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                            </label>
-                            <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Todo Level" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4Xe-5G-efR">
-                                <rect key="frame" x="147" y="121" width="81" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <size key="shadowOffset" width="0.0" height="0.0"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bip-r9-o1K">
                                 <rect key="frame" x="0.0" y="523" width="375" height="144"/>
                                 <subviews>
@@ -127,15 +82,63 @@
                                     <constraint firstAttribute="bottom" secondItem="Ahr-7y-tCM" secondAttribute="bottom" constant="40" id="sBw-De-PI6"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CreateTime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LMA-GS-Tvh">
+                                <rect key="frame" x="16" y="72" width="88" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="StartTime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJC-6c-ctl">
+                                <rect key="frame" x="16" y="101" width="75" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FinishTime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q1z-b8-8vJ">
+                                <rect key="frame" x="16" y="130" width="82" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhr-IP-lbe">
+                                <rect key="frame" x="143" y="72" width="216" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcE-Bs-Is4">
+                                <rect key="frame" x="143" y="101" width="216" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73j-hX-QCf">
+                                <rect key="frame" x="143" y="130" width="216" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="hhr-IP-lbe" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" constant="8" id="3G4-PZ-Fcs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="73j-hX-QCf" secondAttribute="trailing" id="75W-lj-bIi"/>
                             <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="bip-r9-o1K" secondAttribute="bottom" id="Ins-Jr-Km0"/>
                             <constraint firstItem="Si6-Rw-x0C" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="JKb-om-EPX"/>
+                            <constraint firstItem="73j-hX-QCf" firstAttribute="top" secondItem="mcE-Bs-Is4" secondAttribute="bottom" constant="8" id="QFW-ew-vuB"/>
+                            <constraint firstItem="mcE-Bs-Is4" firstAttribute="leading" secondItem="hhr-IP-lbe" secondAttribute="leading" id="TkE-Gu-5Sx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hhr-IP-lbe" secondAttribute="trailing" id="U94-8M-Y8x"/>
                             <constraint firstAttribute="trailing" secondItem="bip-r9-o1K" secondAttribute="trailing" id="Ymf-qn-TnC"/>
                             <constraint firstItem="bip-r9-o1K" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" id="co5-WN-qOt"/>
                             <constraint firstAttribute="trailing" secondItem="Si6-Rw-x0C" secondAttribute="trailing" id="jDB-5p-raV"/>
-                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="Si6-Rw-x0C" secondAttribute="bottom" id="sBk-H5-Tj0"/>
+                            <constraint firstItem="mcE-Bs-Is4" firstAttribute="top" secondItem="hhr-IP-lbe" secondAttribute="bottom" constant="8" id="kiz-A4-bUi"/>
+                            <constraint firstItem="73j-hX-QCf" firstAttribute="leading" secondItem="mcE-Bs-Is4" secondAttribute="leading" id="lPa-9q-alv"/>
+                            <constraint firstItem="Si6-Rw-x0C" firstAttribute="bottom" secondItem="bip-r9-o1K" secondAttribute="top" id="ntu-oR-KWa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mcE-Bs-Is4" secondAttribute="trailing" id="p1B-FT-8hQ"/>
+                            <constraint firstItem="hhr-IP-lbe" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leadingMargin" constant="127" id="tdg-PP-59a"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -143,11 +146,13 @@
                     <connections>
                         <outlet property="abortButton" destination="Bgj-Nt-TeE" id="dKC-Dp-9pn"/>
                         <outlet property="bottomToolbar" destination="Si6-Rw-x0C" id="hwn-Nb-yfz"/>
-                        <outlet property="createTimeLabel" destination="0XM-y9-sOw" id="94t-iF-fzg"/>
+                        <outlet property="createTimeLabel" destination="hhr-IP-lbe" id="TIf-mm-ZSJ"/>
                         <outlet property="finishButton" destination="3KT-Ws-wnS" id="P5b-ug-j5w"/>
-                        <outlet property="finishTimeLabel" destination="F1S-16-lo7" id="y3k-1T-kOs"/>
-                        <outlet property="levelLabel" destination="JzZ-rP-tbw" id="m7b-oc-bJd"/>
+                        <outlet property="finishTimeLabel" destination="73j-hX-QCf" id="KLU-CZ-UI4"/>
+                        <outlet property="startButton" destination="GnQ-rE-Jog" id="L00-vI-e6c"/>
+                        <outlet property="startTimeLabel" destination="mcE-Bs-Is4" id="6vZ-AT-inn"/>
                         <outlet property="statusBar" destination="bip-r9-o1K" id="vIm-nY-JqK"/>
+                        <outlet property="statusBarBottomConstraint" destination="Ins-Jr-Km0" id="F0L-N7-SvP"/>
                         <outlet property="statusLabel" destination="Ahr-7y-tCM" id="52Z-wo-Pqm"/>
                     </connections>
                 </viewController>

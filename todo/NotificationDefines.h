@@ -12,6 +12,9 @@
 #define NOTI_TODO_CREATE  @"TODO_CREATE"
 #define NOTI_TODO_FINISH  @"TODO_FINISH"
 #define NOTI_TODO_ABORT  @"TODO_ABORT"
+#define NOTI_TODO_START  @"TODO_START"
+
+#define NOTI_TODO_STATUS @"TODO_STATUS"
 
 
 #endif /* NotificationDefines_h */
