@@ -31,17 +31,21 @@ typedef enum : NSUInteger {
 
 @interface TodoItem : NSObject<NSCoding>
 
-@property (nonatomic, strong) NSString *title;
 
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, assign) TodoStatus todoStatus;
+@property (nonatomic, assign) TodoLevel level;
+@property (nonatomic, assign) TodoRepeat repeat;
+
+
+#pragma mark - readonly
+
+@property (nonatomic, strong, readonly) NSString *uuid;
 @property (nonatomic, strong, readonly) NSString *createTimeString;
 @property (nonatomic, strong, readonly) NSDate *createTime;
 @property (nonatomic, strong, readonly) NSDate *endTime;
 @property (nonatomic, strong, readonly) NSDate *startTime;
 
-
-@property (nonatomic, assign) TodoStatus todoStatus;
-@property (nonatomic, assign) TodoLevel level;
-@property (nonatomic, assign) TodoRepeat repeat;
 
 
 + (NSString *)todoLevelString:(TodoLevel)level;

@@ -7,6 +7,7 @@
 //
 
 #import "TodoItem.h"
+#import "Tool.h"
 
 @interface TodoItem()
 
@@ -14,7 +15,7 @@
 @property (nonatomic, strong) NSDate *endTime;
 @property (nonatomic, strong) NSDate *startTime;
 @property (nonatomic, strong) NSString *createTimeString;
-
+@property (nonatomic, strong) NSString *uuid;
 
 @end
 
@@ -87,6 +88,7 @@
         self.createTime = [NSDate date];
         self.level = TodoLevel_Normal;
         self.repeat = TodoRepeat_Off;
+        self.uuid = [Tool uuidString];
     }
     return self;
 }
@@ -101,6 +103,7 @@
     [aCoder encodeObject:self.endTime forKey:@"endTime"];
     [aCoder encodeObject:self.createTime forKey:@"createTime"];
     [aCoder encodeObject:self.startTime forKey:@"startTime"];
+    [aCoder encodeObject:self.uuid forKey:@"uuid"];
 }
 
 - (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -114,8 +117,15 @@
         self.createTime = [aDecoder decodeObjectForKey:@"createTime"];
         self.startTime = [aDecoder decodeObjectForKey:@"startTime"];
         self.endTime = [aDecoder decodeObjectForKey:@"endTime"];
+        self.uuid = [aDecoder decodeObjectForKey:@"uuid"];
     }
     return self;
+}
+
+- (NSString *)description {
+    NSMutableString *result = [[NSMutableString alloc]initWithString:[super description]];
+    [result appendString:@"\n"];
+    return result;
 }
 
 @end

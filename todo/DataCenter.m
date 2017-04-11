@@ -62,6 +62,7 @@ static DataCenter *_sharedInstance;
 - (NSString *)dataPath {
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     NSString *filePath = [path stringByAppendingPathComponent:@"todoList.data"];
+    NSLog(@"filePath %@", filePath);
     return filePath;
 }
 

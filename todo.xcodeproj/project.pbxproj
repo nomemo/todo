@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E0123B91E9D25C000EA1257 /* Tool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0123B81E9D25C000EA1257 /* Tool.m */; };
 		4E1A36E91E90DA3B0044755A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A36E81E90DA3B0044755A /* main.m */; };
 		4E1A36EC1E90DA3B0044755A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A36EB1E90DA3B0044755A /* AppDelegate.m */; };
 		4E1A36EF1E90DA3B0044755A /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1A36EE1E90DA3B0044755A /* MasterViewController.m */; };
@@ -23,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E0123B71E9D25C000EA1257 /* Tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tool.h; sourceTree = "<group>"; };
+		4E0123B81E9D25C000EA1257 /* Tool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tool.m; sourceTree = "<group>"; };
 		4E1A36E51E90DA3B0044755A /* todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E1A36E81E90DA3B0044755A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4E1A36EA1E90DA3B0044755A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -80,6 +83,8 @@
 			isa = PBXGroup;
 			children = (
 				4EDF9A381E9183BE009D0681 /* NotificationDefines.h */,
+				4E0123B71E9D25C000EA1257 /* Tool.h */,
+				4E0123B81E9D25C000EA1257 /* Tool.m */,
 				4EDF9A371E918261009D0681 /* CreateTodo */,
 				4EDF9A331E9181F3009D0681 /* Storyborad */,
 				4E1A36EA1E90DA3B0044755A /* AppDelegate.h */,
@@ -208,6 +213,7 @@
 				4EB29C011E9518C20036330B /* DataCenter.m in Sources */,
 				4E1A36E91E90DA3B0044755A /* main.m in Sources */,
 				4EDF9A361E91825D009D0681 /* CreateTodoTableViewController.m in Sources */,
+				4E0123B91E9D25C000EA1257 /* Tool.m in Sources */,
 				4E1A36F21E90DA3B0044755A /* DetailViewController.m in Sources */,
 				4E8AF9861E97DC3B0006EFEA /* TodoLevelSelectTableViewController.m in Sources */,
 				4E2CF94B1E90DC020070F3A9 /* TodoItem.m in Sources */,
