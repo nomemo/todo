@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "TagItem.h"
 
 
 typedef enum : NSUInteger {
@@ -36,7 +36,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) TodoStatus todoStatus;
 @property (nonatomic, assign) TodoLevel level;
 @property (nonatomic, assign) TodoRepeat repeat;
-
+@property (nonatomic, strong) NSArray<TagItem *> *tags;
 
 #pragma mark - readonly
 

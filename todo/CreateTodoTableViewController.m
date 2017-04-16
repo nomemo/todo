@@ -10,8 +10,9 @@
 #import "NotificationDefines.h" 
 #import "TodoItem.h"
 #import "TodoLevelSelectTableViewController.h"
+#import "TagTableViewController.h"
 
-@interface CreateTodoTableViewController ()
+@interface CreateTodoTableViewController ()<TagSelectionPageDelegate>
 
 
 @property (nonatomic, assign) TodoLevel todoLevel;
@@ -35,6 +36,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.todoItem == nil) {
+        self.todoItem = [[TodoItem alloc]init];
+    }
     self.showDatePicker = false;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -60,11 +64,10 @@
 #pragma mark - Save todo item 
 
 - (void)saveTodoItem {
-    TodoItem *item = [[TodoItem alloc]init];
-    item.title = self.titleLabel.text;
-    item.repeat = self.repeatSwitch.isOn;
-    item.level = self.todoLevel;
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_CREATE object:item];
+    self.todoItem.title = self.titleLabel.text;
+    self.todoItem.repeat = self.repeatSwitch.isOn;
+    self.todoItem.level = self.todoLevel;
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_CREATE object:self.todoItem];
     NSLog(@"Save");
 }
 
@@ -77,7 +80,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 3;
+            return 4;
         case 1:
             return 2;
     }
@@ -148,6 +151,23 @@
 }
 */
 
+#pragma mark - TagSelectionPageDelegate
+
+- (NSString *)titleForSelection {
+    if (self.titleLabel.text.length == 0) {
+        return @"New Mission";
+    }
+    return self.titleLabel.text;
+}
+
+- (NSArray<TagItem *> *)selectedTags {
+    return self.todoItem.tags;
+}
+
+- (void)selectResult:(NSArray<TagItem *> *)selectedTags {
+    self.todoItem.tags = selectedTags;
+}
+
 
 #pragma mark - Navigation
 
@@ -161,6 +181,10 @@
         selectCon.todoLevelCallback = ^(TodoLevel level) {
             self.todoLevel = level;
         };
+    }
+    if ([segue.identifier isEqualToString:@"gotoSelectTagPage"]) {
+        TagTableViewController *selectCon = segue.destinationViewController;
+        selectCon.delegate = self;
     }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.

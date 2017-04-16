@@ -13,8 +13,8 @@ static DataCenter *_sharedInstance;
 
 @interface DataCenter()
 
-@property NSMutableArray *allTodoITems;
-
+@property NSMutableArray *allTodoItems;
+@property NSMutableArray *allTagItems;
 
 @end
 
@@ -43,6 +43,7 @@ static DataCenter *_sharedInstance;
     if (self) {
         [self setupNotifications];
         [self loadData];
+        [self loadTagItemData];
     }
     return self;
 }
@@ -67,7 +68,7 @@ static DataCenter *_sharedInstance;
 }
 
 - (void)clearData {
-    self.allTodoITems = [NSMutableArray array];
+    self.allTodoItems = [NSMutableArray array];
     [self saveData];
 }
 
@@ -75,7 +76,7 @@ static DataCenter *_sharedInstance;
 - (void)saveData {
     //    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     //    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
-    BOOL result = [NSKeyedArchiver archiveRootObject:self.allTodoITems toFile:[self dataPath]];
+    BOOL result = [NSKeyedArchiver archiveRootObject:self.allTodoItems toFile:[self dataPath]];
     NSLog(@"result %@", @(result));
     //    NSJSONSerialization wr
 }
@@ -86,7 +87,7 @@ static DataCenter *_sharedInstance;
     NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self dataPath]];
     if (array) {
         
-        self.allTodoITems = [NSMutableArray arrayWithArray:array];
+        self.allTodoItems = [NSMutableArray arrayWithArray:array];
 
     }
     //    NSKeyedArchiver
@@ -94,7 +95,7 @@ static DataCenter *_sharedInstance;
 
 - (NSMutableArray *)fetchMissonPool {
     NSMutableArray *array = [NSMutableArray array];
-    for (TodoItem *item in self.allTodoITems) {
+    for (TodoItem *item in self.allTodoItems) {
         if (item.repeat == TodoRepeat_On) {
             [array addObject:item];
         }
@@ -105,7 +106,7 @@ static DataCenter *_sharedInstance;
 - (void )fetchAllTodoItem:(TableDataSource)dataSource {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSMutableArray *array = [NSMutableArray array];
-    for (TodoItem *item in self.allTodoITems) {
+    for (TodoItem *item in self.allTodoItems) {
         if (item.repeat == TodoRepeat_Off) {
             NSMutableArray *todos = dict[item.createTimeString];
             if (todos == nil) {
@@ -121,7 +122,7 @@ static DataCenter *_sharedInstance;
 
 - (void )fetchItemsByStatus:(TodoStatus)status dataSource:(TableDataSource)dataSource{
     NSMutableArray *tempArray = [NSMutableArray array];
-    for (TodoItem *item in self.allTodoITems) {
+    for (TodoItem *item in self.allTodoItems) {
         switch (status) {
             case TodoStatus_Finish:
                 if (item.todoStatus == TodoStatus_Finish) {
@@ -177,15 +178,52 @@ static DataCenter *_sharedInstance;
 
 - (void)createTodo:(NSNotification *)noti {
     //    NSLog(@"%@", noti.object);
-    if (!self.allTodoITems) {
-        self.allTodoITems = [[NSMutableArray alloc] init];
+    if (!self.allTodoItems) {
+        self.allTodoItems = [[NSMutableArray alloc] init];
     }
-    [self.allTodoITems insertObject:noti.object atIndex:0];
+    [self.allTodoItems insertObject:noti.object atIndex:0];
     
     [self saveData];
     //    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     //    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+#pragma mark - TagItem 
+
+
+- (NSString *)tagItemPath {
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    NSString *filePath = [path stringByAppendingPathComponent:@"tags.data"];
+    NSLog(@"filePath %@", filePath);
+    return filePath;
+}
+
+- (void)loadTagItemData {
+    NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self tagItemPath]];
+    if (array) {
+        self.allTagItems = [NSMutableArray arrayWithArray:array];
+    } else {
+        self.allTagItems = [NSMutableArray array];
+    }
+}
+
+- (void)saveTags {
+    BOOL result = [NSKeyedArchiver archiveRootObject:self.allTagItems toFile:[self tagItemPath]];
+    NSLog(@"result %@", @(result));
+}
+
+- (void)addTag:(TagItem *)tagItem {
+    [self.allTagItems addObject:tagItem];
+    [self saveTags];
+}
+
+- (void)deleteTag:(TagItem *)tagItem {
+    [self.allTagItems removeObject:tagItem];
+    [self saveTags];
+}
+
+- (NSArray *)fetchTags {
+    return _allTagItems;
+}
 
 @end

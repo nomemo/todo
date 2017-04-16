@@ -89,6 +89,7 @@
         self.level = TodoLevel_Normal;
         self.repeat = TodoRepeat_Off;
         self.uuid = [Tool uuidString];
+        self.tags = [NSMutableArray array];
     }
     return self;
 }
@@ -98,7 +99,7 @@
     [aCoder encodeInteger:self.todoStatus forKey:@"todoStatus"];
     [aCoder encodeInteger:self.level forKey:@"level"];
     [aCoder encodeInteger:self.repeat forKey:@"repeat"];
-    
+    [aCoder encodeObject:self.tags forKey:@"tags"];
     
     [aCoder encodeObject:self.endTime forKey:@"endTime"];
     [aCoder encodeObject:self.createTime forKey:@"createTime"];
@@ -113,6 +114,7 @@
         self.todoStatus = [aDecoder decodeIntForKey:@"todoStatus"];
         self.level = [aDecoder decodeIntegerForKey:@"level"];
         self.repeat = [aDecoder decodeIntegerForKey:@"repeat"];
+        self.tags = [aDecoder decodeObjectForKey:@"tags"];
         
         self.createTime = [aDecoder decodeObjectForKey:@"createTime"];
         self.startTime = [aDecoder decodeObjectForKey:@"startTime"];
