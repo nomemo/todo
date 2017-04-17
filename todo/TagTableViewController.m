@@ -166,6 +166,32 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([self isCreateTagCell:indexPath]) {
         [self showAddNewTagAlertView];
+        return;
+    }
+    if (indexPath.section == 1) {
+        [self.addedTags insertObject:self.restTags[indexPath.row-1] atIndex:0];
+//        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0 ]] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+        [self.restTags removeObjectAtIndex:indexPath.row -1];
+//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView moveRowAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:0 inSection:0 ]];
+    } else {
+        TagItem *item = self.addedTags[indexPath.row];
+        __block NSUInteger index = 0;
+        [self.restTags enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            TagItem *temp = obj;
+            if (temp.times <= item.times) {
+                *stop = true;
+                return;
+            }
+            index++;
+        }];
+        [self.restTags insertObject:item atIndex:index];
+//        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index+1 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.addedTags removeObjectAtIndex:indexPath.row];
+//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView moveRowAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:index+1 inSection:1]];
+
     }
 }
 

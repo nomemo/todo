@@ -62,5 +62,16 @@
     return true;
 }
 
+- (NSComparisonResult)compare:(id)other {
+    TagItem *compareItem = other;
+    if (compareItem.times < self.times ) {
+        return NSOrderedDescending;
+    }
+    if (compareItem.times > self.times) {
+        return NSOrderedAscending;
+    }
+    return NSOrderedSame;
+}
+
 
 @end
