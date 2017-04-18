@@ -22,6 +22,7 @@
 @property (assign, nonatomic) BOOL showDatePicker;
 @property (weak, nonatomic) IBOutlet UISwitch *repeatSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *levelDetailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tagDetailLabel;
 
 @end
 
@@ -166,6 +167,19 @@
 
 - (void)selectResult:(NSArray<TagItem *> *)selectedTags {
     self.todoItem.tags = selectedTags;
+    switch (selectedTags.count) {
+        case 0:
+            self.tagDetailLabel.text = @"None";
+            break;
+        case 1: {
+            TagItem *item = selectedTags[0];
+            self.tagDetailLabel.text = item.name;
+            break;
+        }
+        default:
+            self.tagDetailLabel.text = [NSString stringWithFormat:@"%ld", selectedTags.count];
+            break;
+    }
 }
 
 

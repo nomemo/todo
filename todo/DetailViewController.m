@@ -29,6 +29,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *levelLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *tagDetailLabel;
 
 @end
 
@@ -84,6 +85,7 @@
     self.startTimeLabel.text = [self.todoItem.startTime description];
     self.finishTimeLabel.text = [self.todoItem.endTime description];
 
+    self.tagDetailLabel.text = [self.todoItem.tags componentsJoinedByString:@","];
 }
 
 

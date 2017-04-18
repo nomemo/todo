@@ -49,6 +49,10 @@
     return self;
 }
 
+- (NSString *)description {
+    return self.name;
+}
+
 #pragma mark - For sort 
 
 - (BOOL)isEqual:(id)object {
