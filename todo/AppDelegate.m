@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DetailViewController.h"
+#import "NotifyCenter.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -22,6 +23,9 @@
 //    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
 //    navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
 //    splitViewController.delegate = self;
+ 
+    [[NotifyCenter notifyCenter] test:4];
+    
     return YES;
 }
 
@@ -39,6 +43,7 @@
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[NotifyCenter notifyCenter]resetTheBadge];
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 }
 
