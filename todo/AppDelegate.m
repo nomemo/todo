@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import "DetailViewController.h"
 #import "NotifyCenter.h"
+#import <EventKit/EventKit.h>
+#import "CalendarCenter.h"
+
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -23,11 +26,12 @@
 //    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
 //    navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
 //    splitViewController.delegate = self;
- 
-    [[NotifyCenter notifyCenter] test:4];
     
     return YES;
 }
+
+
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

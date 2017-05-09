@@ -18,6 +18,8 @@
 		4E1A36F71E90DA3B0044755A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A36F61E90DA3B0044755A /* Assets.xcassets */; };
 		4E1A36FA1E90DA3B0044755A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A36F81E90DA3B0044755A /* LaunchScreen.storyboard */; };
 		4E2CF94B1E90DC020070F3A9 /* TodoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CF94A1E90DC020070F3A9 /* TodoItem.m */; };
+		4E479FDF1EB71B7000D92F67 /* CalendarCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E479FDE1EB71B7000D92F67 /* CalendarCenter.m */; };
+		4E479FE11EB727EA00D92F67 /* Submarine.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 4E479FE01EB727EA00D92F67 /* Submarine.aiff */; };
 		4E8AF9861E97DC3B0006EFEA /* TodoLevelSelectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8AF9851E97DC3B0006EFEA /* TodoLevelSelectTableViewController.m */; };
 		4EB29BFD1E936EF50036330B /* TodoListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB29BFC1E936EF50036330B /* TodoListTableViewController.m */; };
 		4EB29C011E9518C20036330B /* DataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB29C001E9518C20036330B /* DataCenter.m */; };
@@ -47,6 +49,9 @@
 		4E1A36FB1E90DA3B0044755A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4E2CF9491E90DC020070F3A9 /* TodoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoItem.h; sourceTree = "<group>"; };
 		4E2CF94A1E90DC020070F3A9 /* TodoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoItem.m; sourceTree = "<group>"; };
+		4E479FDD1EB71B7000D92F67 /* CalendarCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarCenter.h; sourceTree = "<group>"; };
+		4E479FDE1EB71B7000D92F67 /* CalendarCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarCenter.m; sourceTree = "<group>"; };
+		4E479FE01EB727EA00D92F67 /* Submarine.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Submarine.aiff; sourceTree = "<group>"; };
 		4E8AF9841E97DC3B0006EFEA /* TodoLevelSelectTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoLevelSelectTableViewController.h; sourceTree = "<group>"; };
 		4E8AF9851E97DC3B0006EFEA /* TodoLevelSelectTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoLevelSelectTableViewController.m; sourceTree = "<group>"; };
 		4EB29BFB1E936EF50036330B /* TodoListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoListTableViewController.h; sourceTree = "<group>"; };
@@ -91,11 +96,14 @@
 		4E1A36E61E90DA3B0044755A /* todo */ = {
 			isa = PBXGroup;
 			children = (
+				4E479FE01EB727EA00D92F67 /* Submarine.aiff */,
 				4EDF9A381E9183BE009D0681 /* NotificationDefines.h */,
 				4E0123B71E9D25C000EA1257 /* Tool.h */,
 				4E0123B81E9D25C000EA1257 /* Tool.m */,
 				4ECDF4BE1EAC855C00A890BD /* NotifyCenter.h */,
 				4ECDF4BF1EAC855C00A890BD /* NotifyCenter.m */,
+				4E479FDD1EB71B7000D92F67 /* CalendarCenter.h */,
+				4E479FDE1EB71B7000D92F67 /* CalendarCenter.m */,
 				4EDF9A371E918261009D0681 /* CreateTodo */,
 				4EDF9A331E9181F3009D0681 /* Storyborad */,
 				4E1A36EA1E90DA3B0044755A /* AppDelegate.h */,
@@ -209,6 +217,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E479FE11EB727EA00D92F67 /* Submarine.aiff in Resources */,
 				4E1A36FA1E90DA3B0044755A /* LaunchScreen.storyboard in Resources */,
 				4E1A36F71E90DA3B0044755A /* Assets.xcassets in Resources */,
 				4E1A36F51E90DA3B0044755A /* Main.storyboard in Resources */,
@@ -233,6 +242,7 @@
 				4EDF9A361E91825D009D0681 /* CreateTodoTableViewController.m in Sources */,
 				4E0123B91E9D25C000EA1257 /* Tool.m in Sources */,
 				4E1A36F21E90DA3B0044755A /* DetailViewController.m in Sources */,
+				4E479FDF1EB71B7000D92F67 /* CalendarCenter.m in Sources */,
 				4E8AF9861E97DC3B0006EFEA /* TodoLevelSelectTableViewController.m in Sources */,
 				4E2CF94B1E90DC020070F3A9 /* TodoItem.m in Sources */,
 				4EB29BFD1E936EF50036330B /* TodoListTableViewController.m in Sources */,

@@ -113,7 +113,7 @@ static NotifyCenter *_sharedInstance;
             content.title = [NSString localizedUserNotificationStringForKey:index arguments:nil];
             content.body = [NSString localizedUserNotificationStringForKey:@"Hello_message_body"
                                                                  arguments:nil];
-            content.sound = [UNNotificationSound defaultSound];
+            content.sound = [UNNotificationSound soundNamed:@"Submarine.aiff"];
             self.badgeCount++;
             content.badge = @(self.badgeCount);
             UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:index content:content trigger:trigger3];
