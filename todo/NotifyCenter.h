@@ -15,4 +15,7 @@
 - (void)test:(NSInteger)delay;
 
 - (void)resetTheBadge;
+- (void)createTomorrowNotify;
+- (void)createNightNofity;
+
 @end

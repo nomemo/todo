@@ -123,4 +123,75 @@ static NotifyCenter *_sharedInstance;
 }
 
 
+- (void)createTomorrowNotify {
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+
+    NSDate *  senddate=[NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [gregorian components:NSCalendarUnitWeekday | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:senddate];
+    
+    [components setDay:([components day]+1)];
+    [components setHour:8];
+    [components setMinute:0];
+    
+    
+//    NSDate *beginningOfWeek = [gregorian dateFromComponents:components];
+//    NSDateFormatter *dateday = [[NSDateFormatter alloc] init];
+//    [dateday setDateFormat:@"yyyy/MM/dd hh:mm:ss"];
+//    NSString * dataStri = [NSString stringWithFormat:@"%@",[dateday stringFromDate:beginningOfWeek]];;
+//    NSLog(@"dataStri==%@",dataStri);
+    
+
+
+    
+//    NSDate *nextMinite = [NSDate dateWithTimeIntervalSinceNow:delay*(1+i)];
+//    NSLog(@"nextMinute %@", nextMinite);
+//    NSDateComponents *components = [gregorian components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitMinute|NSCalendarUnitSecond fromDate:nextMinite];
+    
+    
+    UNCalendarNotificationTrigger *trigger3 = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:false];
+//    NSString *index = [NSString stringWithFormat:@"index %@", @(i+1)];
+    
+    UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
+    content.title = [NSString localizedUserNotificationStringForKey:@"MorningNotify" arguments:nil];
+    content.body = [NSString localizedUserNotificationStringForKey:@"Time to manage your today's work"
+                                                         arguments:nil];
+    content.sound = [UNNotificationSound soundNamed:@"Submarine.aiff"];
+    self.badgeCount++;
+    content.badge = @(self.badgeCount);
+    UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"MorningReminder" content:content trigger:trigger3];
+    [center addNotificationRequest:request withCompletionHandler:nil];
+
+}
+
+- (void)createNightNofity {
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    
+    NSDate *  senddate=[NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [gregorian components:NSCalendarUnitWeekday | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:senddate];
+    
+    if (components.hour > 22) {
+        [components setDay:([components day]+1)];
+    }
+    [components setHour:22];
+    [components setMinute:0];
+    
+    
+    UNCalendarNotificationTrigger *trigger3 = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:components repeats:false];
+    
+    UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
+    content.title = [NSString localizedUserNotificationStringForKey:@"NightNotify" arguments:nil];
+    content.body = [NSString localizedUserNotificationStringForKey:@"Time to summary your today's work"
+                                                         arguments:nil];
+    content.sound = [UNNotificationSound soundNamed:@"Submarine.aiff"];
+    self.badgeCount++;
+    content.badge = @(self.badgeCount);
+    UNNotificationRequest* request = [UNNotificationRequest requestWithIdentifier:@"NightNotify" content:content trigger:trigger3];
+    [center addNotificationRequest:request withCompletionHandler:nil];
+
+}
+
+
 @end
