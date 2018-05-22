@@ -9,7 +9,7 @@
 #import "MasterViewController.h"
 #import "DetailViewController.h"
 #import "NotificationDefines.h"
-#import "TodoItem.h"
+#import "RecordItem.h"
 #import "TodoListTableViewController.h"
 #import "DataCenter.h"
 
@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *abortCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *missionPoolCell;
 
+@property (weak, nonatomic) IBOutlet UITableViewCell *timeSummary;
+@property (weak, nonatomic) IBOutlet UITableViewCell *moneySummary;
 
 @end
 
@@ -33,12 +35,20 @@
 
 - (void)setupPage {
     [self setupNotifications];
+    [self updateSummary];
+    
+}
+
+- (void)updateSummary {
+
+    [[DataCenter dataCenter]fetchSummary:^(NSInteger money, NSInteger time) {
+        self.timeSummary.textLabel.text = [NSString stringWithFormat:@"Time: %@ min", @(time)];
+        self.moneySummary.textLabel.text = [NSString stringWithFormat:@"Money:￥ %@", @(money)];
+    }];
 }
 
 - (void)setupNotifications {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createTodo:) name:NOTI_TODO_CREATE object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(abortTodo:) name:NOTI_TODO_ABORT object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishTodo:) name:NOTI_TODO_FINISH object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateSummary) name:NOTI_UPDATE_SUMMARY object:nil];
 }
 
 - (void)viewDidLoad {
@@ -97,7 +107,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     TodoListTableViewController *controller = (TodoListTableViewController *)[[segue destinationViewController] topViewController];
     if (sender == self.allCell) {
-        [[DataCenter dataCenter] fetchAllTodoItem:^(NSMutableArray *sections, NSMutableDictionary *data) {
+        [[DataCenter dataCenter] fetchAllRecords:^(NSMutableArray *sections, NSMutableDictionary *data) {
             controller.todoDicts = data;
             controller.sections = sections;
         }];
@@ -132,26 +142,26 @@
 
 
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//    return 2;
+//}
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return self.objects.count;
-    NSInteger result = 0;
-    switch (section) {
-        case 0:
-            result = 4;
-            break;
-        case 1:
-            result = 1;
-            break;
-        default:
-            break;
-    }
-    return result;
-}
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+////    return self.objects.count;
+//    NSInteger result = 0;
+//    switch (section) {
+//        case 0:
+//            result = 4;
+//            break;
+//        case 1:
+//            result = 1;
+//            break;
+//        default:
+//            break;
+//    }
+//    return result;
+//}
 
 
 

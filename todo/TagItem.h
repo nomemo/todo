@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong, readonly) NSString *uuid;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, assign) NSInteger times;
+@property (nonatomic, assign) NSInteger times;  //使用次数
 
 - (instancetype)initWithName:(NSString *)name;
 

@@ -8,22 +8,32 @@
 
 #import "CreateTodoTableViewController.h"
 #import "NotificationDefines.h" 
-#import "TodoItem.h"
+#import "RecordItem.h"
 #import "TodoLevelSelectTableViewController.h"
 #import "TagTableViewController.h"
+#import "DatePickerViewController.h"
 
 @interface CreateTodoTableViewController ()<TagSelectionPageDelegate>
 
 
-@property (nonatomic, assign) TodoLevel todoLevel;
 
 @property (weak, nonatomic) IBOutlet UITextField *titleLabel;
-@property (weak, nonatomic) IBOutlet UITableViewCell *deadlineTableViewCell;
-@property (assign, nonatomic) BOOL showDatePicker;
-@property (weak, nonatomic) IBOutlet UISwitch *repeatSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *levelDetailLabel;
-@property (weak, nonatomic) IBOutlet UILabel *tagDetailLabel;
+@property (weak, nonatomic) IBOutlet UITextField *moneyLabel;
+@property (weak, nonatomic) IBOutlet UITextField *timeLabel;
 
+@property (weak, nonatomic) IBOutlet UISwitch *asSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *trSwitch;
+
+@property (nonatomic, assign) TodoLevel todoLevel;
+@property (weak, nonatomic) IBOutlet UILabel *levelDetailLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *tagDetailLabel;
+@property (assign, nonatomic) BOOL showDatePicker;
+
+@property (weak, nonatomic) IBOutlet UILabel *createDateLabel;
+//@property (strong, nonatomic) NSDate *createDate;
+
+@property (strong, nonatomic) NSArray *tags;
 @end
 
 @implementation CreateTodoTableViewController
@@ -31,15 +41,16 @@
 
 - (void)setTodoLevel:(TodoLevel)todoLevel {
     _todoLevel = todoLevel;
-    NSString *string = [TodoItem todoLevelString:todoLevel];
+    NSString *string = [RecordItem todoLevelString:todoLevel];
     self.levelDetailLabel.text = string;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (self.todoItem == nil) {
-        self.todoItem = [[TodoItem alloc]init];
+    if (self.recordObj == nil) {
+        self.recordObj = [[RecordItem alloc]init];
     }
+    self.createDateLabel.text = self.recordObj.createTimeString;
     self.showDatePicker = false;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -65,23 +76,27 @@
 #pragma mark - Save todo item 
 
 - (void)saveTodoItem {
-    self.todoItem.title = self.titleLabel.text;
-    self.todoItem.repeat = self.repeatSwitch.isOn;
-    self.todoItem.level = self.todoLevel;
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_TODO_CREATE object:self.todoItem];
+    self.recordObj.title = self.titleLabel.text;
+    self.recordObj.money = [self.moneyLabel.text integerValue];
+    self.recordObj.time = [self.timeLabel.text integerValue];
+    self.recordObj.value = self.asSwitch.isOn?Record_Spend:Record_Accumulate;
+    self.recordObj.type = self.trSwitch.isOn?TodoRepeat_Target:TodoRepeat_Record;
+    self.recordObj.level = self.todoLevel;
+    self.recordObj.tags = self.tags;
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_RECORD_CREATE object:self.recordObj];
     NSLog(@"Save");
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 4;
+            return 8;
         case 1:
             return 2;
     }
@@ -90,27 +105,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSIndexPath *ddindexPath = [tableView indexPathForCell:self.deadlineTableViewCell];
-    if ([ddindexPath compare:indexPath] == NSOrderedSame ) {
-        self.showDatePicker = !self.showDatePicker;
-        [self.tableView beginUpdates];
-        [self.tableView endUpdates];
-    }
+//    NSIndexPath *ddindexPath = [tableView indexPathForCell:self.deadlineTableViewCell];
+//    if ([ddindexPath compare:indexPath] == NSOrderedSame ) {
+//        self.showDatePicker = !self.showDatePicker;
+//        [self.tableView beginUpdates];
+//        [self.tableView endUpdates];
+//    }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 1 && indexPath.section == 1) {
-        if (self.showDatePicker == true) {
-            return [super tableView:tableView heightForRowAtIndexPath:indexPath];
-        } else {
-            return 0;
-        }
-    }
-    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (indexPath.row == 1 && indexPath.section == 1) {
+//        if (self.showDatePicker == true) {
+//            return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+//        } else {
+//            return 0;
+//        }
+//    }
+//    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+//}
 
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-////    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+////    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier" forIndexPath:indexPath];
 //
 ////    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 //    // Configure the cell...
@@ -162,11 +177,11 @@
 }
 
 - (NSArray<TagItem *> *)selectedTags {
-    return self.todoItem.tags;
+    return self.tags;
 }
 
 - (void)selectResult:(NSArray<TagItem *> *)selectedTags {
-    self.todoItem.tags = selectedTags;
+    self.tags = [selectedTags copy];
     switch (selectedTags.count) {
         case 0:
             self.tagDetailLabel.text = @"None";
@@ -177,7 +192,7 @@
             break;
         }
         default:
-            self.tagDetailLabel.text = [NSString stringWithFormat:@"%ld", selectedTags.count];
+            self.tagDetailLabel.text = [NSString stringWithFormat:@"%@", @(selectedTags.count)];
             break;
     }
 }
@@ -185,11 +200,7 @@
 
 #pragma mark - Navigation
 
-
-
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"gotoSelectLevelPage"]) {
         TodoLevelSelectTableViewController *selectCon = segue.destinationViewController;
         selectCon.todoLevelCallback = ^(TodoLevel level) {
@@ -200,8 +211,14 @@
         TagTableViewController *selectCon = segue.destinationViewController;
         selectCon.delegate = self;
     }
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"gotoDatePickerPage"]) {
+        DatePickerViewController *dateCon = segue.destinationViewController;
+        dateCon.date = self.recordObj.createTime;
+        dateCon.dateCallback = ^(NSDate *date) {
+            self.recordObj.createTime = date;
+            self.createDateLabel.text = self.recordObj.createTimeString;
+        };
+    }
 }
 
 @end

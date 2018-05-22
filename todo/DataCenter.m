@@ -8,12 +8,16 @@
 
 #import "DataCenter.h"
 #import "NotificationDefines.h"
+#define DATABASE_FILE @"DB.data"
+
+
 
 static DataCenter *_sharedInstance;
 
+
 @interface DataCenter()
 
-@property NSMutableArray *allTodoItems;
+@property NSMutableArray *records;
 @property NSMutableArray *allTagItems;
 
 @end
@@ -52,23 +56,26 @@ static DataCenter *_sharedInstance;
 #pragma mark - Notification
 
 - (void)setupNotifications {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createTodo:) name:NOTI_TODO_CREATE object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusChange:) name:NOTI_TODO_STATUS object:nil];
+//RECORD
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addRecord:) name:NOTI_RECORD_CREATE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteRecord:) name:NOTI_RECORD_DELETE object:nil];
+
+//STATUS
+    
 }
 
 
-#pragma mark - Data
-
+#pragma mark - Stroage
 
 - (NSString *)dataPath {
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *filePath = [path stringByAppendingPathComponent:@"todoList.data"];
+    NSString *filePath = [path stringByAppendingPathComponent:DATABASE_FILE];
     NSLog(@"filePath %@", filePath);
     return filePath;
 }
 
 - (void)clearData {
-    self.allTodoItems = [NSMutableArray array];
+    self.records = [NSMutableArray array];
     [self saveData];
 }
 
@@ -76,7 +83,7 @@ static DataCenter *_sharedInstance;
 - (void)saveData {
     //    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     //    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
-    BOOL result = [NSKeyedArchiver archiveRootObject:self.allTodoItems toFile:[self dataPath]];
+    BOOL result = [NSKeyedArchiver archiveRootObject:self.records toFile:[self dataPath]];
     NSLog(@"result %@", @(result));
     //    NSJSONSerialization wr
 }
@@ -87,42 +94,92 @@ static DataCenter *_sharedInstance;
     NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self dataPath]];
     if (array) {
         
-        self.allTodoItems = [NSMutableArray arrayWithArray:array];
+        self.records = [NSMutableArray arrayWithArray:array];
 
     }
     //    NSKeyedArchiver
 }
 
+#pragma mark - MISSON
+
 - (NSMutableArray *)fetchMissonPool {
     NSMutableArray *array = [NSMutableArray array];
-    for (TodoItem *item in self.allTodoItems) {
-        if (item.repeat == TodoRepeat_On) {
+    for (RecordItem *item in self.records) {
+        if (item.type == TodoRepeat_Target) {
             [array addObject:item];
         }
     }
     return array;
 }
 
-- (void )fetchAllTodoItem:(TableDataSource)dataSource {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    NSMutableArray *array = [NSMutableArray array];
-    for (TodoItem *item in self.allTodoItems) {
-        if (item.repeat == TodoRepeat_Off) {
-            NSMutableArray *todos = dict[item.createTimeString];
+
+#pragma mark RECORD
+
+- (void )fetchAllRecords:(TableDataSource)dataSource {
+    NSMutableDictionary *sections = [NSMutableDictionary dictionary];
+    NSMutableArray *recordSectionList = [NSMutableArray array];
+    [self.records sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        RecordItem *o1 = obj1;
+        RecordItem *o2 = obj2;
+        return [o2.createTime compare:o1.createTime];
+    }];
+    
+    for (RecordItem *item in self.records) {
+        if (item.type == TodoRepeat_Record) {
+            NSMutableArray *todos = sections[item.createTimeString];
             if (todos == nil) {
                 todos = [NSMutableArray array];
-                dict[item.createTimeString] = todos;
-                [array addObject:item.createTimeString];
+                sections[item.createTimeString] = todos;
+                [recordSectionList addObject:item.createTimeString];
             }
             [todos addObject:item];
         }
     }
-    dataSource(array, dict);
+    dataSource(recordSectionList, sections);
 }
+
+- (void)addRecord:(NSNotification *)noti {
+    if (!self.records) {
+        self.records = [[NSMutableArray alloc] init];
+    }
+    [self.records insertObject:noti.object atIndex:0];
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_UPDATE_SUMMARY object:nil];
+    [self saveData];
+}
+
+
+- (void)deleteRecord:(NSNotification *)noti {
+    [self.records removeObject:noti.object];
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_UPDATE_SUMMARY object:nil];
+
+    [self saveData];
+}
+
+#pragma mark SUMMARY
+
+- (void)fetchSummary:(SummaryDataSrouce)dataSource {
+    NSInteger money = 0;
+    NSInteger time = 0;
+    for (RecordItem *item in self.records) {
+        if (item.todoStatus == TodoStatus_Finish) {
+            if (item.value == Record_Spend) {
+                money -= item.money;
+                time -= item.time;
+            } else {
+                money += item.money;
+                time += item.time;
+            }
+        }
+    }
+    dataSource(money, time);
+}
+
+
+#pragma mark - STATUS
 
 - (void )fetchItemsByStatus:(TodoStatus)status dataSource:(TableDataSource)dataSource{
     NSMutableArray *tempArray = [NSMutableArray array];
-    for (TodoItem *item in self.allTodoItems) {
+    for (RecordItem *item in self.records) {
         switch (status) {
             case TodoStatus_Finish:
                 if (item.todoStatus == TodoStatus_Finish) {
@@ -145,8 +202,8 @@ static DataCenter *_sharedInstance;
     }
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSMutableArray *array = [NSMutableArray array];
-    for (TodoItem *item in tempArray) {
-        if (item.repeat == TodoRepeat_Off) {
+    for (RecordItem *item in tempArray) {
+        if (item.type == TodoRepeat_Record) {
             NSMutableArray *todos = dict[item.createTimeString];
             if (todos == nil) {
                 todos = [NSMutableArray array];
@@ -160,11 +217,6 @@ static DataCenter *_sharedInstance;
 }
 
 
-
-#pragma mark - TodoItem
-
-
-
 - (void)statusChange:(NSNotification *)noti {
     
     //    TodoItem *item = noti.object;
@@ -176,19 +228,8 @@ static DataCenter *_sharedInstance;
     [self saveData];
 }
 
-- (void)createTodo:(NSNotification *)noti {
-    //    NSLog(@"%@", noti.object);
-    if (!self.allTodoItems) {
-        self.allTodoItems = [[NSMutableArray alloc] init];
-    }
-    [self.allTodoItems insertObject:noti.object atIndex:0];
-    
-    [self saveData];
-    //    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    //    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-}
 
-#pragma mark - TagItem 
+#pragma mark - TAG
 
 
 - (NSString *)tagItemPath {

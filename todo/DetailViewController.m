@@ -55,7 +55,7 @@
     [self.view layoutIfNeeded];
     
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        switch (_todoItem.todoStatus) {
+        switch (self->_todoItem.todoStatus) {
             case TodoStatus_Processing:
                 self.statusBar.backgroundColor = [UIColor blueColor];
                 break;
@@ -71,7 +71,7 @@
         }
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        self.statusLabel.text = [TodoItem totoStatusString:_todoItem.todoStatus];
+        self.statusLabel.text = [RecordItem totoStatusString:self->_todoItem.todoStatus];
     }];
 
 }
@@ -147,7 +147,7 @@
 
 #pragma mark - Managing the detail item
 
-- (void)setTodoItem:(TodoItem *)todoItem {
+- (void)setTodoItem:(RecordItem *)todoItem {
     if (_todoItem != todoItem) {
         _todoItem = todoItem;
         [self configureView];

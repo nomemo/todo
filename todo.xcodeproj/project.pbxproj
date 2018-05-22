@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		227E311320B32EA900E2F99E /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 227E311220B32EA900E2F99E /* DatePickerViewController.m */; };
+		22AB1A0920B166CA00267B73 /* RecordUITableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AB1A0720B166CA00267B73 /* RecordUITableViewCell.m */; };
+		22AB1A0A20B166CA00267B73 /* RecordUITableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22AB1A0820B166CA00267B73 /* RecordUITableViewCell.xib */; };
 		4E0123B91E9D25C000EA1257 /* Tool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0123B81E9D25C000EA1257 /* Tool.m */; };
 		4E0123BC1EA3691700EA1257 /* TagTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0123BB1EA3691700EA1257 /* TagTableViewController.m */; };
 		4E0123BF1EA36C4300EA1257 /* TagItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0123BE1EA36C4300EA1257 /* TagItem.m */; };
@@ -17,7 +20,7 @@
 		4E1A36F51E90DA3B0044755A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A36F31E90DA3B0044755A /* Main.storyboard */; };
 		4E1A36F71E90DA3B0044755A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A36F61E90DA3B0044755A /* Assets.xcassets */; };
 		4E1A36FA1E90DA3B0044755A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E1A36F81E90DA3B0044755A /* LaunchScreen.storyboard */; };
-		4E2CF94B1E90DC020070F3A9 /* TodoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CF94A1E90DC020070F3A9 /* TodoItem.m */; };
+		4E2CF94B1E90DC020070F3A9 /* RecordItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2CF94A1E90DC020070F3A9 /* RecordItem.m */; };
 		4E479FDF1EB71B7000D92F67 /* CalendarCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E479FDE1EB71B7000D92F67 /* CalendarCenter.m */; };
 		4E479FE11EB727EA00D92F67 /* Submarine.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 4E479FE01EB727EA00D92F67 /* Submarine.aiff */; };
 		4E8AF9861E97DC3B0006EFEA /* TodoLevelSelectTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8AF9851E97DC3B0006EFEA /* TodoLevelSelectTableViewController.m */; };
@@ -29,6 +32,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		227E311120B32EA900E2F99E /* DatePickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
+		227E311220B32EA900E2F99E /* DatePickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
+		22AB1A0620B166CA00267B73 /* RecordUITableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordUITableViewCell.h; sourceTree = "<group>"; };
+		22AB1A0720B166CA00267B73 /* RecordUITableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecordUITableViewCell.m; sourceTree = "<group>"; };
+		22AB1A0820B166CA00267B73 /* RecordUITableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordUITableViewCell.xib; sourceTree = "<group>"; };
 		4E0123B71E9D25C000EA1257 /* Tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tool.h; sourceTree = "<group>"; };
 		4E0123B81E9D25C000EA1257 /* Tool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tool.m; sourceTree = "<group>"; };
 		4E0123BA1EA3691700EA1257 /* TagTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagTableViewController.h; sourceTree = "<group>"; };
@@ -47,8 +55,8 @@
 		4E1A36F61E90DA3B0044755A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E1A36F91E90DA3B0044755A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4E1A36FB1E90DA3B0044755A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4E2CF9491E90DC020070F3A9 /* TodoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoItem.h; sourceTree = "<group>"; };
-		4E2CF94A1E90DC020070F3A9 /* TodoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoItem.m; sourceTree = "<group>"; };
+		4E2CF9491E90DC020070F3A9 /* RecordItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordItem.h; sourceTree = "<group>"; };
+		4E2CF94A1E90DC020070F3A9 /* RecordItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordItem.m; sourceTree = "<group>"; };
 		4E479FDD1EB71B7000D92F67 /* CalendarCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarCenter.h; sourceTree = "<group>"; };
 		4E479FDE1EB71B7000D92F67 /* CalendarCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarCenter.m; sourceTree = "<group>"; };
 		4E479FE01EB727EA00D92F67 /* Submarine.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Submarine.aiff; sourceTree = "<group>"; };
@@ -77,6 +85,68 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		221F317D20B41D0500CC3F0F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				22AB1A0620B166CA00267B73 /* RecordUITableViewCell.h */,
+				22AB1A0720B166CA00267B73 /* RecordUITableViewCell.m */,
+				22AB1A0820B166CA00267B73 /* RecordUITableViewCell.xib */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		221F317E20B41D2400CC3F0F /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				4E0123BD1EA36C4300EA1257 /* TagItem.h */,
+				4E0123BE1EA36C4300EA1257 /* TagItem.m */,
+				4E2CF9491E90DC020070F3A9 /* RecordItem.h */,
+				4E2CF94A1E90DC020070F3A9 /* RecordItem.m */,
+			);
+			name = Object;
+			sourceTree = "<group>";
+		};
+		221F317F20B41D3000CC3F0F /* Selections */ = {
+			isa = PBXGroup;
+			children = (
+				4E8AF9841E97DC3B0006EFEA /* TodoLevelSelectTableViewController.h */,
+				4E8AF9851E97DC3B0006EFEA /* TodoLevelSelectTableViewController.m */,
+				4E0123BA1EA3691700EA1257 /* TagTableViewController.h */,
+				4E0123BB1EA3691700EA1257 /* TagTableViewController.m */,
+				227E311120B32EA900E2F99E /* DatePickerViewController.h */,
+				227E311220B32EA900E2F99E /* DatePickerViewController.m */,
+			);
+			name = Selections;
+			sourceTree = "<group>";
+		};
+		221F318020B41D4D00CC3F0F /* Utilis */ = {
+			isa = PBXGroup;
+			children = (
+				4E0123B71E9D25C000EA1257 /* Tool.h */,
+				4E0123B81E9D25C000EA1257 /* Tool.m */,
+				4ECDF4BE1EAC855C00A890BD /* NotifyCenter.h */,
+				4ECDF4BF1EAC855C00A890BD /* NotifyCenter.m */,
+				4E479FDD1EB71B7000D92F67 /* CalendarCenter.h */,
+				4E479FDE1EB71B7000D92F67 /* CalendarCenter.m */,
+			);
+			name = Utilis;
+			sourceTree = "<group>";
+		};
+		22AB1A0B20B1778200267B73 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				4E1A36ED1E90DA3B0044755A /* MasterViewController.h */,
+				4E1A36EE1E90DA3B0044755A /* MasterViewController.m */,
+				4EB29BFB1E936EF50036330B /* TodoListTableViewController.h */,
+				4EB29BFC1E936EF50036330B /* TodoListTableViewController.m */,
+				4E1A36F01E90DA3B0044755A /* DetailViewController.h */,
+				4E1A36F11E90DA3B0044755A /* DetailViewController.m */,
+				4E1A36F31E90DA3B0044755A /* Main.storyboard */,
+				221F317D20B41D0500CC3F0F /* Cell */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
 		4E1A36A01E90D96B0044755A = {
 			isa = PBXGroup;
 			children = (
@@ -98,25 +168,14 @@
 			children = (
 				4E479FE01EB727EA00D92F67 /* Submarine.aiff */,
 				4EDF9A381E9183BE009D0681 /* NotificationDefines.h */,
-				4E0123B71E9D25C000EA1257 /* Tool.h */,
-				4E0123B81E9D25C000EA1257 /* Tool.m */,
-				4ECDF4BE1EAC855C00A890BD /* NotifyCenter.h */,
-				4ECDF4BF1EAC855C00A890BD /* NotifyCenter.m */,
-				4E479FDD1EB71B7000D92F67 /* CalendarCenter.h */,
-				4E479FDE1EB71B7000D92F67 /* CalendarCenter.m */,
-				4EDF9A371E918261009D0681 /* CreateTodo */,
-				4EDF9A331E9181F3009D0681 /* Storyborad */,
-				4E1A36EA1E90DA3B0044755A /* AppDelegate.h */,
-				4E1A36EB1E90DA3B0044755A /* AppDelegate.m */,
-				4E1A36F31E90DA3B0044755A /* Main.storyboard */,
 				4EB29BFF1E9518C20036330B /* DataCenter.h */,
 				4EB29C001E9518C20036330B /* DataCenter.m */,
-				4E1A36ED1E90DA3B0044755A /* MasterViewController.h */,
-				4E1A36EE1E90DA3B0044755A /* MasterViewController.m */,
-				4EB29BFB1E936EF50036330B /* TodoListTableViewController.h */,
-				4EB29BFC1E936EF50036330B /* TodoListTableViewController.m */,
-				4E1A36F01E90DA3B0044755A /* DetailViewController.h */,
-				4E1A36F11E90DA3B0044755A /* DetailViewController.m */,
+				221F318020B41D4D00CC3F0F /* Utilis */,
+				221F317E20B41D2400CC3F0F /* Object */,
+				22AB1A0B20B1778200267B73 /* Main */,
+				4EDF9A371E918261009D0681 /* CreateTodo */,
+				4E1A36EA1E90DA3B0044755A /* AppDelegate.h */,
+				4E1A36EB1E90DA3B0044755A /* AppDelegate.m */,
 				4E1A36F61E90DA3B0044755A /* Assets.xcassets */,
 				4E1A36F81E90DA3B0044755A /* LaunchScreen.storyboard */,
 				4E1A36FB1E90DA3B0044755A /* Info.plist */,
@@ -133,27 +192,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4EDF9A331E9181F3009D0681 /* Storyborad */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Storyborad;
-			sourceTree = "<group>";
-		};
 		4EDF9A371E918261009D0681 /* CreateTodo */ = {
 			isa = PBXGroup;
 			children = (
-				4E0123BD1EA36C4300EA1257 /* TagItem.h */,
-				4E0123BE1EA36C4300EA1257 /* TagItem.m */,
-				4E2CF9491E90DC020070F3A9 /* TodoItem.h */,
-				4E2CF94A1E90DC020070F3A9 /* TodoItem.m */,
 				4EDF9A341E91825D009D0681 /* CreateTodoTableViewController.h */,
 				4EDF9A351E91825D009D0681 /* CreateTodoTableViewController.m */,
-				4E8AF9841E97DC3B0006EFEA /* TodoLevelSelectTableViewController.h */,
-				4E8AF9851E97DC3B0006EFEA /* TodoLevelSelectTableViewController.m */,
-				4E0123BA1EA3691700EA1257 /* TagTableViewController.h */,
-				4E0123BB1EA3691700EA1257 /* TagTableViewController.m */,
 				4EDF9A311E918197009D0681 /* CreateTodo.storyboard */,
+				221F317F20B41D3000CC3F0F /* Selections */,
 			);
 			name = CreateTodo;
 			sourceTree = "<group>";
@@ -184,7 +229,7 @@
 		4E1A36A11E90D96B0044755A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "JUE DUKE";
 				TargetAttributes = {
 					4E1A36E41E90DA3B0044755A = {
@@ -219,6 +264,7 @@
 			files = (
 				4E479FE11EB727EA00D92F67 /* Submarine.aiff in Resources */,
 				4E1A36FA1E90DA3B0044755A /* LaunchScreen.storyboard in Resources */,
+				22AB1A0A20B166CA00267B73 /* RecordUITableViewCell.xib in Resources */,
 				4E1A36F71E90DA3B0044755A /* Assets.xcassets in Resources */,
 				4E1A36F51E90DA3B0044755A /* Main.storyboard in Resources */,
 				4EDF9A321E918197009D0681 /* CreateTodo.storyboard in Resources */,
@@ -232,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				227E311320B32EA900E2F99E /* DatePickerViewController.m in Sources */,
 				4ECDF4C01EAC855C00A890BD /* NotifyCenter.m in Sources */,
 				4E1A36EC1E90DA3B0044755A /* AppDelegate.m in Sources */,
 				4E1A36EF1E90DA3B0044755A /* MasterViewController.m in Sources */,
@@ -239,12 +286,13 @@
 				4E0123BF1EA36C4300EA1257 /* TagItem.m in Sources */,
 				4EB29C011E9518C20036330B /* DataCenter.m in Sources */,
 				4E1A36E91E90DA3B0044755A /* main.m in Sources */,
+				22AB1A0920B166CA00267B73 /* RecordUITableViewCell.m in Sources */,
 				4EDF9A361E91825D009D0681 /* CreateTodoTableViewController.m in Sources */,
 				4E0123B91E9D25C000EA1257 /* Tool.m in Sources */,
 				4E1A36F21E90DA3B0044755A /* DetailViewController.m in Sources */,
 				4E479FDF1EB71B7000D92F67 /* CalendarCenter.m in Sources */,
 				4E8AF9861E97DC3B0006EFEA /* TodoLevelSelectTableViewController.m in Sources */,
-				4E2CF94B1E90DC020070F3A9 /* TodoItem.m in Sources */,
+				4E2CF94B1E90DC020070F3A9 /* RecordItem.m in Sources */,
 				4EB29BFD1E936EF50036330B /* TodoListTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,15 +329,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -330,15 +386,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

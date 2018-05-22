@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TodoItem.h"
+#import "RecordItem.h"
 @class TagItem;
 
 typedef void(^TableDataSource)(NSMutableArray *sections, NSMutableDictionary *data);
+typedef void(^SummaryDataSrouce)(NSInteger money, NSInteger time);
 
 @interface DataCenter : NSObject
 
@@ -19,8 +20,9 @@ typedef void(^TableDataSource)(NSMutableArray *sections, NSMutableDictionary *da
 - (void)clearData;
 - (NSMutableArray *)fetchMissonPool;
 - (void )fetchItemsByStatus:(TodoStatus)status dataSource:(TableDataSource)dataSource;
-- (void )fetchAllTodoItem:(TableDataSource)dataSource;
+- (void )fetchAllRecords:(TableDataSource)dataSource;
 
+- (void)fetchSummary:(SummaryDataSrouce)dataSource;
 
 - (void)addTag:(TagItem *)tagItem;
 - (void)deleteTag:(TagItem *)tagItem;

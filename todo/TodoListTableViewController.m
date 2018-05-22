@@ -9,7 +9,8 @@
 #import "TodoListTableViewController.h"
 #import "DetailViewController.h"
 #import "DataCenter.h"
-
+#import "RecordUITableViewCell.h"
+#import "NotificationDefines.h"
 @interface TodoListTableViewController ()
 
 @end
@@ -18,10 +19,11 @@
 
 
 - (void)setupInitialPage {
-    
+    [self.tableView registerNib:[UINib nibWithNibName:RecordUITableViewCellID bundle:nil] forCellReuseIdentifier:RecordUITableViewCellID];
+
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [[DataCenter dataCenter]fetchAllTodoItem:^(NSMutableArray *sections, NSMutableDictionary *data) {
+        [[DataCenter dataCenter]fetchAllRecords:^(NSMutableArray *sections, NSMutableDictionary *data) {
             self.todoDicts = data;
             self.sections = sections;
         }];
@@ -54,7 +56,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
 
         NSArray *todos = self.todoDicts[self.sections[indexPath.section]];
-        TodoItem *item = todos[indexPath.row];
+        RecordItem *item = todos[indexPath.row];
 
         DetailViewController *controller = [segue destinationViewController];
         controller.todoItem = item;
@@ -81,78 +83,42 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoItemCell1" forIndexPath:indexPath];
+    RecordUITableViewCell* cell = cell = [tableView dequeueReusableCellWithIdentifier:RecordUITableViewCellID];
 
-    NSArray *todos = self.todoDicts[self.sections[indexPath.section]];
-    TodoItem *object = todos[indexPath.row];
-    switch (object.todoStatus) {
-        case TodoStatus_Abort:
-            cell.textLabel.textColor = [UIColor redColor];
-            break;
-        case TodoStatus_Finish:
-            cell.textLabel.textColor = [UIColor greenColor];
-            break;
-        default:
-//            cell.textLabel.textColor = [UIColor blackColor];
-            break;
-    }
-    cell.textLabel.text = object.title;
+    id object = [self fetchItemByPath:indexPath];
+    cell.item = object;
     return cell;
 }
 
-
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"showDetail" sender:nil];
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+        
+        id object = [self deleteObjectByIndexPath:indexPath];
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_RECORD_DELETE object:object];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+
+#pragma mark - VIEW DATA
+
+- (RecordItem *)deleteObjectByIndexPath:(NSIndexPath *)indexPath {
+    NSMutableArray *todos = self.todoDicts[self.sections[indexPath.section]];
+    RecordItem *object = todos[indexPath.row];
+    [todos removeObject:object];
+    return object;
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+- (RecordItem *)fetchItemByPath:(NSIndexPath *)indexPath {
+    NSMutableArray *todos = self.todoDicts[self.sections[indexPath.section]];
+    RecordItem *object = todos[indexPath.row];
+    return object;
 }
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

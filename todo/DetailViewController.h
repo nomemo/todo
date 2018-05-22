@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TodoItem.h"
+#import "RecordItem.h"
 
 
 @interface DetailViewController : UIViewController
 
-@property (strong, nonatomic) TodoItem *todoItem;
+@property (strong, nonatomic) RecordItem *todoItem;
 
 @end
 

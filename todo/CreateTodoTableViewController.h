@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class TodoItem;
+@class RecordItem;
 
 @interface CreateTodoTableViewController : UITableViewController
 
 - (IBAction)dismissPage:(id)sender;
 
-@property (nonatomic, strong) TodoItem *todoItem;
+@property (nonatomic, strong) RecordItem *recordObj;
 
 @end
