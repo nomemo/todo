@@ -17,7 +17,7 @@
     self.time.text = [NSString stringWithFormat:@"%@ min",@(item.time)];
     self.money.text = [NSString stringWithFormat:@"￥ %@",@(item.money)];
     self.status.text = [RecordItem totoStatusString:item.todoStatus];
-    if (item.value == Record_Spend) {
+    if (item.value == RecordValue_Spend) {
         self.time.textColor = [UIColor redColor];
         self.money.textColor = [UIColor redColor];
     }else {

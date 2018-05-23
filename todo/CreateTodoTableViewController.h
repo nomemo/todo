@@ -15,5 +15,5 @@
 - (IBAction)dismissPage:(id)sender;
 
 @property (nonatomic, strong) RecordItem *recordObj;
-
+@property (nonatomic, strong) RecordItem *templateObj;
 @end

@@ -28,7 +28,7 @@
         self.todoStatus = TodoStatus_NotBeign;
         self.createTime = [NSDate date];
         self.level = TodoLevel_Normal;
-        self.type = TodoRepeat_Record;
+        self.type = RecordType_Default;
         self.uuid = [Tool uuidString];
         self.tags = [NSMutableArray array];
     }
@@ -58,12 +58,12 @@
 #pragma mark - Propertys
 
 
-//TodoRepeat_Record,
-//TodoRepeat_Target,
+//Record_Default,
+//Record_Template,
 
 - (void)setType:(RecordType)type {
     _type = type;
-    if (type == TodoRepeat_Record) {
+    if (type == RecordType_Default) {
         self.todoStatus = TodoStatus_Finish;
     } else {
         self.todoStatus = TodoStatus_NotBeign;

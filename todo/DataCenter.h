@@ -18,11 +18,25 @@ typedef void(^SummaryDataSrouce)(NSInteger money, NSInteger time);
 + (DataCenter *)dataCenter;
 
 - (void)clearData;
-- (NSMutableArray *)fetchMissonPool;
 - (void )fetchItemsByStatus:(TodoStatus)status dataSource:(TableDataSource)dataSource;
-- (void )fetchAllRecords:(TableDataSource)dataSource;
 
 - (void)fetchSummary:(SummaryDataSrouce)dataSource;
+
+
+#pragma mark - RECORD
+
+- (void )fetchRecords:(TableDataSource)dataSource byType:(RecordType)type;
+
+#pragma mark - TARGET
+
+- (NSMutableArray *)fetchTargets;
+
+#pragma mark - TEMPLATE
+
+- (NSMutableArray *)fetchTemplates;
+
+
+#pragma mark - TAG
 
 - (void)addTag:(TagItem *)tagItem;
 - (void)deleteTag:(TagItem *)tagItem;

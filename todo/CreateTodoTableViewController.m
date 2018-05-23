@@ -22,7 +22,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *timeLabel;
 
 @property (weak, nonatomic) IBOutlet UISwitch *asSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *trSwitch;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *typeSegment;
+
 
 @property (nonatomic, assign) TodoLevel todoLevel;
 @property (weak, nonatomic) IBOutlet UILabel *levelDetailLabel;
@@ -50,13 +51,11 @@
     if (self.recordObj == nil) {
         self.recordObj = [[RecordItem alloc]init];
     }
+    if (self.templateObj != nil) {
+        [self buildTemplate:self.templateObj];
+    }
     self.createDateLabel.text = self.recordObj.createTimeString;
     self.showDatePicker = false;
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,14 +72,40 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)buildTemplate:(RecordItem *)recordObj {
+    self.titleLabel.text = recordObj.title;
+    self.moneyLabel.text = [NSString stringWithFormat:@"%@",@(recordObj.money)];
+    self.timeLabel.text = [NSString stringWithFormat:@"%@",@(recordObj.time)];
+    if (recordObj.value == RecordValue_Spend) {
+        self.asSwitch.on = TRUE;
+    } else {
+        self.asSwitch.on = FALSE;
+    }
+    self.typeSegment.selectedSegmentIndex = 0;
+    self.todoLevel = recordObj.level;
+    self.tags = recordObj.tags;
+}
+
 #pragma mark - Save todo item 
 
 - (void)saveTodoItem {
     self.recordObj.title = self.titleLabel.text;
     self.recordObj.money = [self.moneyLabel.text integerValue];
     self.recordObj.time = [self.timeLabel.text integerValue];
-    self.recordObj.value = self.asSwitch.isOn?Record_Spend:Record_Accumulate;
-    self.recordObj.type = self.trSwitch.isOn?TodoRepeat_Target:TodoRepeat_Record;
+    self.recordObj.value = self.asSwitch.isOn?RecordValue_Spend:RecordValue_Accumulate;
+    switch (self.typeSegment.selectedSegmentIndex) {
+        case 0:
+            self.recordObj.type = RecordType_Default;
+            break;
+        case 1:
+            self.recordObj.type = RecordType_Target;
+            break;
+        case 2:
+            self.recordObj.type = RecordType_Template;
+            break;
+        default:
+            break;
+    }
     self.recordObj.level = self.todoLevel;
     self.recordObj.tags = self.tags;
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_RECORD_CREATE object:self.recordObj];

@@ -15,17 +15,12 @@
 
 @interface MasterViewController ()
 
+@property (weak, nonatomic) IBOutlet UITableViewCell *recordCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *targetCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *templateCell;
 
-
-
-@property (weak, nonatomic) IBOutlet UITableViewCell *allCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *finishCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *undoneCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *abortCell;
-@property (weak, nonatomic) IBOutlet UITableViewCell *missionPoolCell;
-
-@property (weak, nonatomic) IBOutlet UITableViewCell *timeSummary;
-@property (weak, nonatomic) IBOutlet UITableViewCell *moneySummary;
+@property (weak, nonatomic) IBOutlet UITableViewCell *timeSummaryCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *moneySummaryCell;
 
 @end
 
@@ -42,8 +37,8 @@
 - (void)updateSummary {
 
     [[DataCenter dataCenter]fetchSummary:^(NSInteger money, NSInteger time) {
-        self.timeSummary.textLabel.text = [NSString stringWithFormat:@"Time: %@ min", @(time)];
-        self.moneySummary.textLabel.text = [NSString stringWithFormat:@"Money:￥ %@", @(money)];
+        self.timeSummaryCell.textLabel.text = [NSString stringWithFormat:@"Time: %@ min", @(time)];
+        self.moneySummaryCell.textLabel.text = [NSString stringWithFormat:@"Money:￥ %@", @(money)];
     }];
 }
 
@@ -105,86 +100,36 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    DataCenter *share = [DataCenter dataCenter];
     TodoListTableViewController *controller = (TodoListTableViewController *)[[segue destinationViewController] topViewController];
-    if (sender == self.allCell) {
-        [[DataCenter dataCenter] fetchAllRecords:^(NSMutableArray *sections, NSMutableDictionary *data) {
+    if (sender == self.recordCell) {
+        [share fetchRecords:^(NSMutableArray *sections, NSMutableDictionary *data) {
             controller.todoDicts = data;
             controller.sections = sections;
-        }];
-        controller.title = @"History";
-    } else if (sender == self.finishCell) {
-        [[DataCenter dataCenter] fetchItemsByStatus:TodoStatus_Finish dataSource:^(NSMutableArray *sections, NSMutableDictionary *data) {
+            controller.type = RecordType_Default;
+            controller.title = @"Records";
+        } byType:RecordType_Default];
+    } else if (sender == self.targetCell) {
+        [share fetchRecords:^(NSMutableArray *sections, NSMutableDictionary *data) {
             controller.todoDicts = data;
             controller.sections = sections;
-        }];
-        controller.title = @"Finish";
-    } else if (sender == self.undoneCell) {
-        [[DataCenter dataCenter] fetchItemsByStatus:TodoStatus_NotBeign dataSource:^(NSMutableArray *sections, NSMutableDictionary *data) {
+            controller.title = @"Targets";
+            controller.type = RecordType_Target;
+        } byType:RecordType_Target];
+    } else if (sender == self.templateCell) {
+        [share fetchRecords:^(NSMutableArray *sections, NSMutableDictionary *data) {
             controller.todoDicts = data;
             controller.sections = sections;
-        }];
-
-        controller.title = @"Unfinish";
-    } else if (sender == self.abortCell) {
-        [[DataCenter dataCenter] fetchItemsByStatus:TodoStatus_Abort dataSource:^(NSMutableArray *sections, NSMutableDictionary *data) {
-            controller.todoDicts = data;
-            controller.sections = sections;
-        }];
-
-        controller.title = @"Abort";
-    } else if (sender == self.missionPoolCell) {
-//        controller.todoLists = [[DataCenter dataCenter] fetchMissonPool];
-        controller.title = @"Mission Pool";
+            controller.type = RecordType_Template;
+            controller.title = @"Templates";
+        } byType:RecordType_Template];
     }
-    
 }
 #pragma mark - Table View
-
-
-
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return 2;
-//}
-
-
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-////    return self.objects.count;
-//    NSInteger result = 0;
-//    switch (section) {
-//        case 0:
-//            result = 4;
-//            break;
-//        case 1:
-//            result = 1;
-//            break;
-//        default:
-//            break;
-//    }
-//    return result;
-//}
-
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     [self performSegueWithIdentifier:@"showTodoList" sender:cell];
 }
-
-
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-//    // Return NO if you do not want the specified item to be editable.
-//    return YES;
-//}
-
-
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        [self.objects removeObjectAtIndex:indexPath.row];
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-//    }
-//}
-
 
 @end

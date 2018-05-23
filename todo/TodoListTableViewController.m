@@ -11,6 +11,8 @@
 #import "DataCenter.h"
 #import "RecordUITableViewCell.h"
 #import "NotificationDefines.h"
+#import "CreateTodoTableViewController.h"
+
 @interface TodoListTableViewController ()
 
 @end
@@ -18,16 +20,16 @@
 @implementation TodoListTableViewController
 
 
+//For the firstView
 - (void)setupInitialPage {
-    [self.tableView registerNib:[UINib nibWithNibName:RecordUITableViewCellID bundle:nil] forCellReuseIdentifier:RecordUITableViewCellID];
-
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [[DataCenter dataCenter]fetchAllRecords:^(NSMutableArray *sections, NSMutableDictionary *data) {
+        [[DataCenter dataCenter]fetchRecords:^(NSMutableArray *sections, NSMutableDictionary *data) {
             self.todoDicts = data;
             self.sections = sections;
-        }];
-        self.title = @"History";
+            self.type = RecordType_Default;
+        } byType:RecordType_Default];
+        self.title = @"Records";
     });
 }
 
@@ -35,6 +37,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.tableView registerNib:[UINib nibWithNibName:RecordUITableViewCellID bundle:nil] forCellReuseIdentifier:RecordUITableViewCellID];
+
     [self setupInitialPage];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -52,16 +56,20 @@
 #pragma mark - Page Control
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    NSArray *todos = self.todoDicts[self.sections[indexPath.section]];
+    RecordItem *item = todos[indexPath.row];
+
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-
-        NSArray *todos = self.todoDicts[self.sections[indexPath.section]];
-        RecordItem *item = todos[indexPath.row];
-
         DetailViewController *controller = [segue destinationViewController];
         controller.todoItem = item;
         controller.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
         controller.navigationItem.leftItemsSupplementBackButton = YES;
+    }
+    if ([[segue identifier]isEqualToString:@"showCreateTodo"]) {
+        UINavigationController *con = [segue destinationViewController];
+        CreateTodoTableViewController *root = con.viewControllers[0];
+        root.templateObj = item;
     }
 }
 
@@ -91,7 +99,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"showDetail" sender:nil];
+    if (self.type == RecordType_Template) {
+        
+        [self performSegueWithIdentifier:@"showCreateTodo" sender:nil];
+
+    } else {
+        [self performSegueWithIdentifier:@"showDetail" sender:nil];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

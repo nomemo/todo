@@ -8,7 +8,9 @@
 
 #import "DataCenter.h"
 #import "NotificationDefines.h"
-#define DATABASE_FILE @"DB.data"
+#define DATABASE_RECORD @"DB.data"
+#define DATABASE_TEMPLATE @"TP.data"
+#define DATABASE_TARGET @"TA.data"
 
 
 
@@ -18,6 +20,8 @@ static DataCenter *_sharedInstance;
 @interface DataCenter()
 
 @property NSMutableArray *records;
+@property NSMutableArray *targets;
+@property NSMutableArray *templates;
 @property NSMutableArray *allTagItems;
 
 @end
@@ -59,97 +63,141 @@ static DataCenter *_sharedInstance;
 //RECORD
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addRecord:) name:NOTI_RECORD_CREATE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteRecord:) name:NOTI_RECORD_DELETE object:nil];
-
-//STATUS
     
 }
 
 
 #pragma mark - Stroage
 
-- (NSString *)dataPath {
+- (NSString *)dataPath:(NSString *)fileName {
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    NSString *filePath = [path stringByAppendingPathComponent:DATABASE_FILE];
+    NSString *filePath = [path stringByAppendingPathComponent:fileName];
     NSLog(@"filePath %@", filePath);
     return filePath;
 }
 
+
+
 - (void)clearData {
     self.records = [NSMutableArray array];
+    self.templates = [NSMutableArray array];
+    self.targets = [NSMutableArray array];
     [self saveData];
 }
 
 
 - (void)saveData {
-    //    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    //    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
-    BOOL result = [NSKeyedArchiver archiveRootObject:self.records toFile:[self dataPath]];
-    NSLog(@"result %@", @(result));
-    //    NSJSONSerialization wr
+    BOOL result1 = [NSKeyedArchiver archiveRootObject:self.records toFile:[self dataPath:DATABASE_RECORD]];
+    BOOL result2 = [NSKeyedArchiver archiveRootObject:self.templates toFile:[self dataPath:DATABASE_TEMPLATE]];
+    BOOL result3 = [NSKeyedArchiver archiveRootObject:self.targets toFile:[self dataPath:DATABASE_TARGET]];
+    NSLog(@"result %@, %@, %@", @(result1),@(result2),@(result3));
 }
 
 - (void)loadData {
-    //    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    //    NSString *fileName = [path stringByAppendingPathComponent:@"todoItems.data"];
-    NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self dataPath]];
+    NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self dataPath:DATABASE_RECORD]];
     if (array) {
-        
         self.records = [NSMutableArray arrayWithArray:array];
-
     }
-    //    NSKeyedArchiver
-}
-
-#pragma mark - MISSON
-
-- (NSMutableArray *)fetchMissonPool {
-    NSMutableArray *array = [NSMutableArray array];
-    for (RecordItem *item in self.records) {
-        if (item.type == TodoRepeat_Target) {
-            [array addObject:item];
-        }
+    array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self dataPath:DATABASE_TEMPLATE]];
+    if (array) {
+        self.templates = [NSMutableArray arrayWithArray:array];
     }
-    return array;
+    array = [NSKeyedUnarchiver unarchiveObjectWithFile:[self dataPath:DATABASE_TARGET]];
+    if (array) {
+        self.targets = [NSMutableArray arrayWithArray:array];
+    }
+
 }
 
 
 #pragma mark RECORD
 
-- (void )fetchAllRecords:(TableDataSource)dataSource {
-    NSMutableDictionary *sections = [NSMutableDictionary dictionary];
-    NSMutableArray *recordSectionList = [NSMutableArray array];
-    [self.records sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+- (void)arrangeRecordList:(NSMutableArray *)inputList recordSectionList:(NSMutableArray *)recordSectionList sections:(NSMutableDictionary *)sections {
+    [inputList sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         RecordItem *o1 = obj1;
         RecordItem *o2 = obj2;
         return [o2.createTime compare:o1.createTime];
     }];
-    
-    for (RecordItem *item in self.records) {
-        if (item.type == TodoRepeat_Record) {
-            NSMutableArray *todos = sections[item.createTimeString];
-            if (todos == nil) {
-                todos = [NSMutableArray array];
-                sections[item.createTimeString] = todos;
-                [recordSectionList addObject:item.createTimeString];
-            }
-            [todos addObject:item];
+    for (RecordItem *item in inputList) {
+        NSMutableArray *todos = sections[item.createTimeString];
+        if (todos == nil) {
+            todos = [NSMutableArray array];
+            sections[item.createTimeString] = todos;
+            [recordSectionList addObject:item.createTimeString];
         }
+        [todos addObject:item];
+    }
+}
+
+- (void )fetchRecords:(TableDataSource)dataSource byType:(RecordType)type{
+    NSMutableDictionary *sections = [NSMutableDictionary dictionary];
+    NSMutableArray *recordSectionList = [NSMutableArray array];
+    switch (type) {
+        case RecordType_Default:
+            [self arrangeRecordList:self.records recordSectionList:recordSectionList sections:sections];
+            break;
+        case RecordType_Template:
+            [self arrangeRecordList:self.templates recordSectionList:recordSectionList sections:sections];
+            break;
+        case RecordType_Target:
+            [self arrangeRecordList:self.targets recordSectionList:recordSectionList sections:sections];
+            break;
     }
     dataSource(recordSectionList, sections);
 }
 
 - (void)addRecord:(NSNotification *)noti {
-    if (!self.records) {
-        self.records = [[NSMutableArray alloc] init];
+    RecordItem *item = noti.object;
+    switch (item.type) {
+        case RecordType_Target:
+        {
+            if (!self.targets) {
+                self.targets = [[NSMutableArray alloc] init];
+            }
+            [self.targets insertObject:noti.object atIndex:0];
+        }
+            break;
+        case RecordType_Default:
+        {
+            if (!self.records) {
+                self.records = [[NSMutableArray alloc] init];
+            }
+            [self.records insertObject:noti.object atIndex:0];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_UPDATE_SUMMARY object:nil];
+        }
+            break;
+        case RecordType_Template:
+        {
+            if (!self.templates) {
+                self.templates = [[NSMutableArray alloc] init];
+            }
+            [self.templates insertObject:noti.object atIndex:0];
+        }
+        break;
     }
-    [self.records insertObject:noti.object atIndex:0];
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_UPDATE_SUMMARY object:nil];
     [self saveData];
 }
 
 
 - (void)deleteRecord:(NSNotification *)noti {
-    [self.records removeObject:noti.object];
+    RecordItem *item = noti.object;
+    switch (item.type) {
+        case RecordType_Target:
+        {
+            [self.targets removeObject:noti.object];
+        }
+            break;
+        case RecordType_Default:
+        {
+            [self.records removeObject:noti.object];
+        }
+            break;
+        case RecordType_Template:
+        {
+            [self.templates removeObject:noti.object];
+        }
+            break;
+    }
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTI_UPDATE_SUMMARY object:nil];
 
     [self saveData];
@@ -162,7 +210,7 @@ static DataCenter *_sharedInstance;
     NSInteger time = 0;
     for (RecordItem *item in self.records) {
         if (item.todoStatus == TodoStatus_Finish) {
-            if (item.value == Record_Spend) {
+            if (item.value == RecordValue_Spend) {
                 money -= item.money;
                 time -= item.time;
             } else {
@@ -173,6 +221,20 @@ static DataCenter *_sharedInstance;
     }
     dataSource(money, time);
 }
+
+
+#pragma mark - TARGET
+
+- (NSMutableArray *)fetchTargets {
+    return self.targets;
+}
+
+#pragma mark - TEMPLATE
+
+- (NSMutableArray *)fetchTemplates {
+    return self.templates;
+}
+
 
 
 #pragma mark - STATUS
@@ -203,7 +265,7 @@ static DataCenter *_sharedInstance;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSMutableArray *array = [NSMutableArray array];
     for (RecordItem *item in tempArray) {
-        if (item.type == TodoRepeat_Record) {
+        if (item.type == RecordType_Default) {
             NSMutableArray *todos = dict[item.createTimeString];
             if (todos == nil) {
                 todos = [NSMutableArray array];

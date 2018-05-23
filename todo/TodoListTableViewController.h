@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) NSMutableDictionary *todoDicts;
 @property (nonatomic, strong) NSMutableArray *sections;
+@property (nonatomic, assign) RecordType type;
 
 @end

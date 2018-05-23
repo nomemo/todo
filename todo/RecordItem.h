@@ -27,13 +27,14 @@ typedef enum : NSUInteger {
 } TodoLevel;
 
 typedef enum : NSUInteger {
-    Record_Spend,
-    Record_Accumulate,
+    RecordValue_Spend,
+    RecordValue_Accumulate,
 } RecordValue;
 
 typedef enum : NSUInteger {
-    TodoRepeat_Record,
-    TodoRepeat_Target,
+    RecordType_Default,
+    RecordType_Template,
+    RecordType_Target
 } RecordType;
 
 @interface RecordItem : NSObject<NSCoding>

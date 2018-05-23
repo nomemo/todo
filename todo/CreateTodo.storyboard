@@ -125,22 +125,27 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="p0j-aH-96k">
-                                                    <rect key="frame" x="310" y="6" width="51" height="31"/>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Record | Target" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94b-r6-PiM">
-                                                    <rect key="frame" x="16" y="13.5" width="99" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94b-r6-PiM">
+                                                    <rect key="frame" x="16" y="13.5" width="32" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="n0g-ua-XyJ">
+                                                    <rect key="frame" x="182" y="8" width="182" height="29"/>
+                                                    <segments>
+                                                        <segment title="Record"/>
+                                                        <segment title="Target"/>
+                                                        <segment title="Template"/>
+                                                    </segments>
+                                                </segmentedControl>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="94b-r6-PiM" firstAttribute="centerY" secondItem="VQN-Z6-hsg" secondAttribute="centerY" id="ADa-dK-dLn"/>
+                                                <constraint firstItem="n0g-ua-XyJ" firstAttribute="centerY" secondItem="VQN-Z6-hsg" secondAttribute="centerY" id="BfD-js-Lv4"/>
                                                 <constraint firstItem="94b-r6-PiM" firstAttribute="leading" secondItem="VQN-Z6-hsg" secondAttribute="leading" constant="16" id="UiE-le-LBR"/>
-                                                <constraint firstItem="p0j-aH-96k" firstAttribute="centerY" secondItem="VQN-Z6-hsg" secondAttribute="centerY" id="WfJ-bT-Ae5"/>
-                                                <constraint firstAttribute="trailing" secondItem="p0j-aH-96k" secondAttribute="trailing" constant="16" id="gDo-fl-MWk"/>
+                                                <constraint firstAttribute="trailing" secondItem="n0g-ua-XyJ" secondAttribute="trailing" constant="11" id="bve-bC-Oap"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -278,7 +283,7 @@
                         <outlet property="tagDetailLabel" destination="Kbj-AB-4ih" id="uQn-2z-YTV"/>
                         <outlet property="timeLabel" destination="eCB-mU-d7q" id="kF6-8x-6to"/>
                         <outlet property="titleLabel" destination="LBz-No-TUB" id="3Mj-aa-7Bt"/>
-                        <outlet property="trSwitch" destination="p0j-aH-96k" id="2hm-bo-gWc"/>
+                        <outlet property="typeSegment" destination="n0g-ua-XyJ" id="ShP-a2-pSS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fO9-An-zvj" userLabel="First Responder" sceneMemberID="firstResponder"/>
